@@ -1,3 +1,4 @@
+/* eslint-disable */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var typeorm_1 = require("typeorm");
@@ -7,9 +8,9 @@ typeorm_1.createConnection({
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
-    entities: ['./dist/models/*.js'],
-    migrations: ['./dist/database/migrations/*.js'],
+    entities: ['../models/*.js'],
+    migrations: ['./migrations/*.js'],
     cli: {
-        migrationsDir: './dist/database/migrations',
+        migrationsDir: './migrations',
     },
 });
