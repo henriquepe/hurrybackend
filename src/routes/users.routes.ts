@@ -48,25 +48,25 @@ usersRouter.patch(
     },
 );
 
-usersRouter.post('/forgotPassword', async (request, response) => {
-    const { email } = request.body;
+// usersRouter.post('/forgotPassword', async (request, response) => {
+//     const { email } = request.body;
 
-    try {
-        const usersRepository = getRepository(User);
+//     try {
+//         const usersRepository = getRepository(User);
 
-        const user = usersRepository.findOne({ where: email });
+//         const user = usersRepository.findOne({ where: email });
 
-        if (!email) {
-            throw new Error('User not found');
-        }
+//         if (!email) {
+//             throw new Error('User not found');
+//         }
 
-        const token = crypto.randomBytes(20).toString('hex');
+//         const token = crypto.randomBytes(20).toString('hex');
 
-        const now = new Date();
-        now.setHours(now.getHours() + 1);
-    } catch (err) {
-        return response.status(400).json({ error: err.message });
-    }
-});
+//         const now = new Date();
+//         now.setHours(now.getHours() + 1);
+//     } catch (err) {
+//         return response.status(400).json({ error: err.message });
+//     }
+// });
 
 export default usersRouter;
