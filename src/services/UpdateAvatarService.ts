@@ -1,4 +1,4 @@
-import { getConnection, getRepository } from 'typeorm';
+import { getConnection } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 import User from '../models/User';
@@ -12,9 +12,7 @@ interface Request {
 
 class UpdateAvatarService {
     public async execute({ user_id, avatarFilename }: Request): Promise<User> {
-        const usersRepository = getConnection(
-            process.env.NODE_ENV,
-        ).getRepository(User);
+        const usersRepository = getConnection().getRepository(User);
 
         const user = await usersRepository.findOne(user_id);
 

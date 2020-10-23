@@ -70,7 +70,7 @@ appointmentsRouter.get('/', EnsureAuthenticated_1.default, function (request, re
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                appointmentsRepository = typeorm_1.getConnection(process.env.NODE_ENV).getRepository(Appointment_1.default);
+                appointmentsRepository = typeorm_1.getConnection().getRepository(Appointment_1.default);
                 return [4 /*yield*/, appointmentsRepository.find()];
             case 1:
                 appointments = _a.sent();
