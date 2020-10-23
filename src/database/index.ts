@@ -32,7 +32,7 @@ const databaseConnection = async() => {
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',
-        entitiesDir: './src/models',
+        entitiesDir: './dist/models',
     },
 })
 

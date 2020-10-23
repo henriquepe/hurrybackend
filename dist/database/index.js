@@ -24,7 +24,7 @@ const databaseConnection = async () => {
         migrations: ['./dist/database/**/migrations/*.js'],
         cli: {
             migrationsDir: './src/database/migrations',
-            entitiesDir: './src/models',
+            entitiesDir: './dist/models',
         },
     });
     const userRepository = connection.getRepository(User_entity_1.default);
