@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-path-concat */
 /* eslint-disable prefer-template */
-import {  createConnection, ConnectionManager } from 'typeorm';
+import {  createConnection } from 'typeorm';
 import Appointment from '../models/Appointment.entity';
 import User from '../models/User.entity';
 
@@ -21,10 +21,7 @@ const databaseConnection = async() => {
     database: 'hurrydb',
 
     entities: [
-        // // eslint-disable-next-line global-require
-        // require('../models/Appointment.entity'),
-        // // eslint-disable-next-line global-require
-        // require('../models/User.entity'),
+
         "./dist/models/*.js"
 
 
