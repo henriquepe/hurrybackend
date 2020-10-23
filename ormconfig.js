@@ -1,12 +1,12 @@
+/* eslint-disable */
+console.log(process.env.DATABASE_URL)
 module.exports = {
-    type: 'postgres',
-    host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
-    port: 5432,
-    username: 'hurrydb',
-    password: 'hurrydbpassword',
-    entities: ['./src/models/*.ts'],
-    migrations: ['./src/database/migrations/*.ts'],
-    cli: {
-        migrationsDir: './src/database/migrations',
+    "type": "postgres",
+    "url": process.env.DATABASE_URL,
+    "entities": ["./dist/models/**/*.js"],
+    "migrations": ["./src/database/migrations/**/*.js"],
+    "cli": {
+        "migrationsDir": ["./src/database/migrations"],
+        "entitiesDir": "./src/models"
     },
 };
