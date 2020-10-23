@@ -22,12 +22,13 @@ const databaseConnection = async() => {
 
     entities: [
 
-        "./dist/models/*.js"
+        "./dist/**/**/**.entity{.js, .ts}"
 
 
 
 
     ],
+    synchronize: true,
     migrationsRun: true,
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
