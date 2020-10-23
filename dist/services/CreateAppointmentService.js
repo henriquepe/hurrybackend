@@ -7,7 +7,7 @@ const typeorm_1 = require("typeorm");
 const Appointment_1 = __importDefault(require("../models/Appointment"));
 class CreateAppointmentService {
     async execute({ name, date, provider_id, tickets, eventImage, }) {
-        const appointmentsRepository = typeorm_1.getConnection().getRepository(Appointment_1.default);
+        const appointmentsRepository = typeorm_1.getRepository(Appointment_1.default);
         const appointment = appointmentsRepository.create({
             name,
             date,

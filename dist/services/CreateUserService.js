@@ -8,7 +8,7 @@ const bcrypt_1 = require("bcrypt");
 const User_1 = __importDefault(require("../models/User"));
 class CreateAppointmentService {
     async execute({ name, email, password, avatar, }) {
-        const usersRepository = typeorm_1.getConnection().getRepository(User_1.default);
+        const usersRepository = typeorm_1.getRepository(User_1.default);
         const checkIfUserAlreadyExists = await usersRepository.findOne({
             where: { email },
         });

@@ -1,4 +1,4 @@
-import { getConnection } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import { hash } from 'bcrypt';
 import User from '../models/User';
 
@@ -16,7 +16,7 @@ export default class CreateAppointmentService {
         password,
         avatar,
     }: Request): Promise<User> {
-        const usersRepository = getConnection().getRepository(User);
+        const usersRepository = getRepository(User);
 
         const checkIfUserAlreadyExists = await usersRepository.findOne({
             where: { email },

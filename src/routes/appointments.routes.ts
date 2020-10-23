@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getConnection } from 'typeorm';
+import { getRepository } from 'typeorm';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import Appointment from '../models/Appointment';
 import CreateAppointmentService from '../services/CreateAppointmentService';
@@ -23,7 +23,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
 });
 
 appointmentsRouter.get('/', ensureAuthenticated, async (request, response) => {
-    const appointmentsRepository = getConnection().getRepository(Appointment);
+    const appointmentsRepository = getRepository(Appointment);
 
     const appointments = await appointmentsRepository.find();
 

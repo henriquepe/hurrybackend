@@ -22,7 +22,7 @@ appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, resp
     return response.json(appointment);
 });
 appointmentsRouter.get('/', EnsureAuthenticated_1.default, async (request, response) => {
-    const appointmentsRepository = typeorm_1.getConnection().getRepository(Appointment_1.default);
+    const appointmentsRepository = typeorm_1.getRepository(Appointment_1.default);
     const appointments = await appointmentsRepository.find();
     return response.json(appointments);
 });
