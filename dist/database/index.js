@@ -1,11 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const User_1 = __importDefault(require("../models/User"));
-const Appointment_1 = __importDefault(require("../models/Appointment"));
 typeorm_1.createConnection({
     name: 'hurrybankconnection',
     type: 'postgres',
@@ -14,7 +9,7 @@ typeorm_1.createConnection({
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
-    entities: [User_1.default, Appointment_1.default],
+    entities: ['../models/**/*.js'],
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',

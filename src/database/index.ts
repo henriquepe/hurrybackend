@@ -10,7 +10,8 @@ createConnection({
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
-    entities: [User, Appointment],
+    entities: ['../models/**/*.js'],
+
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',
