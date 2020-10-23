@@ -4,14 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
+const database_1 = __importDefault(require("../database"));
 const AuthenticationService_1 = __importDefault(require("../services/AuthenticationService"));
 const sessionsRouter = express_1.Router();
-const usersRepository = new UsersRepository_1.default();
 sessionsRouter.post('/', async (request, response) => {
     try {
         const { email, password } = request.body;
-        const authenticateUser = new AuthenticationService_1.default(usersRepository);
+        const authenticateUser = new AuthenticationService_1.default(await database_1.default);
         const { user, token } = await authenticateUser.execute({
             email,
             password,

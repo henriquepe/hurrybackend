@@ -4,7 +4,8 @@ import Appointment from '../models/Appointment.entity';
 import User from '../models/User.entity';
 
 useContainer(Container);
-createConnection({
+
+const connection = createConnection({
     type: 'postgres',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
     port: 5432,
@@ -20,6 +21,8 @@ createConnection({
         entitiesDir: './dist/models',
     },
 });
+
+export default connection;
 
 // eslint-disable-next-line no-return-await
 

@@ -1,6 +1,8 @@
 /* eslint-disable no-useless-constructor */
 
 import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Service } from 'typedi';
+import { Connection, Repository } from 'typeorm';
 import Appointment from '../models/Appointment.entity';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
@@ -12,11 +14,15 @@ interface Request {
     tickets: number;
 }
 
+@Service()
 export default class CreateAppointmentService {
-    constructor(
-        @InjectRepository()
-        private readonly appointmentsRepository: AppointmentsRepository,
-    ) {}
+    private appointmentsRepository: AppointmentsRepository;
+
+    constructor(private readonly connection: Connection) {
+        this.appointmentsRepository = this.connection.getCustomRepository(
+            AppointmentsRepository,
+        );
+    }
 
     public async execute({
         name,

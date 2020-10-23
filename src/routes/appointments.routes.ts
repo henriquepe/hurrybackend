@@ -1,18 +1,16 @@
 import { Router } from 'express';
+import connection from '../database';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 import ListAppointmentsService from '../services/ListAppointmentsService';
 
 const appointmentsRouter = Router();
 
-const appointmentsRepository = new AppointmentsRepository();
-
 appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
     const { provider_id, name, date, eventImage, tickets } = request.body;
 
     const createAppointmentService = new CreateAppointmentService(
-        appointmentsRepository,
+        await connection,
     );
 
     const appointment = await createAppointmentService.execute({
@@ -28,7 +26,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
 
 appointmentsRouter.get('/', ensureAuthenticated, async (request, response) => {
     const createListAppointmentsService = new ListAppointmentsService(
-        appointmentsRepository,
+        await connection,
     );
 
     const appointments = createListAppointmentsService.execute();

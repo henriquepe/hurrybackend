@@ -1,6 +1,8 @@
 /* eslint-disable no-useless-constructor */
 import { hash } from 'bcrypt';
 import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Service } from 'typedi';
+import { Connection, Repository } from 'typeorm';
 import User from '../models/User.entity';
 import UsersRepository from '../repositories/UsersRepository';
 
@@ -11,11 +13,15 @@ interface Request {
     avatar: string;
 }
 
+@Service()
 export default class CreateUserService {
-    constructor(
-        @InjectRepository()
-        private readonly usersRepository: UsersRepository,
-    ) {}
+    private usersRepository: UsersRepository;
+
+    constructor(private readonly connection: Connection) {
+        this.usersRepository = this.connection.getCustomRepository(
+            UsersRepository,
+        );
+    }
 
     public async execute({
         name,

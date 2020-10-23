@@ -9,18 +9,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const typeorm_typedi_extensions_1 = require("typeorm-typedi-extensions");
+const typedi_1 = require("typedi");
+const typeorm_1 = require("typeorm");
 const AppointmentsRepository_1 = __importDefault(require("../repositories/AppointmentsRepository"));
 let CreateAppointmentService = class CreateAppointmentService {
-    constructor(appointmentsRepository) {
-        this.appointmentsRepository = appointmentsRepository;
+    constructor(connection) {
+        this.connection = connection;
+        this.appointmentsRepository = this.connection.getCustomRepository(AppointmentsRepository_1.default);
     }
     async execute({ name, date, provider_id, tickets, eventImage, }) {
         const appointment = this.appointmentsRepository.create({
@@ -35,7 +34,7 @@ let CreateAppointmentService = class CreateAppointmentService {
     }
 };
 CreateAppointmentService = __decorate([
-    __param(0, typeorm_typedi_extensions_1.InjectRepository()),
-    __metadata("design:paramtypes", [AppointmentsRepository_1.default])
+    typedi_1.Service(),
+    __metadata("design:paramtypes", [typeorm_1.Connection])
 ], CreateAppointmentService);
 exports.default = CreateAppointmentService;

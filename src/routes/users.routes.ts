@@ -5,16 +5,15 @@ import uploadConfig from '../config/upload';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import CreateUserService from '../services/CreateUserService';
 import UpdateAvatarService from '../services/UpdateAvatarService';
-import UsersRepository from '../repositories/UsersRepository';
+import connection from '../database';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
-const usersRepository = new UsersRepository();
 
 usersRouter.post('/', async (request, response) => {
     const { name, email, password, avatar } = request.body;
 
-    const createUserService = new CreateUserService(usersRepository);
+    const createUserService = new CreateUserService(await connection);
 
     const user = await createUserService.execute({
         name,
@@ -32,7 +31,7 @@ usersRouter.patch(
     upload.single('avatar'),
     async (request, response) => {
         try {
-            const updateAvatar = new UpdateAvatarService(usersRepository);
+            const updateAvatar = new UpdateAvatarService(await connection);
 
             const { id } = request.user;
 

@@ -8,9 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -18,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-useless-constructor */
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const typeorm_typedi_extensions_1 = require("typeorm-typedi-extensions");
+const typedi_1 = require("typedi");
+const typeorm_1 = require("typeorm");
 const upload_1 = __importDefault(require("../config/upload"));
 const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
 let UpdateAvatarService = class UpdateAvatarService {
-    constructor(usersRepository) {
-        this.usersRepository = usersRepository;
+    constructor(connection) {
+        this.connection = connection;
+        this.usersRepository = this.connection.getCustomRepository(UsersRepository_1.default);
     }
     async execute({ user_id, avatarFilename }) {
         const user = await this.usersRepository.findOne(user_id);
@@ -44,7 +43,7 @@ let UpdateAvatarService = class UpdateAvatarService {
     }
 };
 UpdateAvatarService = __decorate([
-    __param(0, typeorm_typedi_extensions_1.InjectRepository()),
-    __metadata("design:paramtypes", [UsersRepository_1.default])
+    typedi_1.Service(),
+    __metadata("design:paramtypes", [typeorm_1.Connection])
 ], UpdateAvatarService);
 exports.default = UpdateAvatarService;

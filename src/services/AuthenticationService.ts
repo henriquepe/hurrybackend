@@ -1,7 +1,9 @@
 /* eslint-disable no-useless-constructor */
 import { compare } from 'bcrypt';
 import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Service } from 'typedi';
 import { sign } from 'jsonwebtoken';
+import { Connection } from 'typeorm';
 import jwt from '../config/auth';
 import User from '../models/User.entity';
 import UsersRepository from '../repositories/UsersRepository';
@@ -16,14 +18,20 @@ interface Response {
     token: string;
 }
 
+@Service()
 class AuthenticationService {
     // using constructor injection
-    constructor(
-        @InjectRepository()
-        private readonly usersRepository: UsersRepository,
-    ) {}
+    private usersRepository: UsersRepository;
+
+    constructor(private readonly connection: Connection) {
+        this.usersRepository = this.connection.getCustomRepository(
+            UsersRepository,
+        );
+    }
 
     public async execute({ email, password }: Request): Promise<Response> {
+        console.log(email);
+
         const user = await this.usersRepository.findOne({
             where: { email },
         });

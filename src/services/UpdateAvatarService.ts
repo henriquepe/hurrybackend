@@ -2,6 +2,8 @@
 import path from 'path';
 import fs from 'fs';
 import { InjectRepository } from 'typeorm-typedi-extensions';
+import { Service } from 'typedi';
+import { Connection, Repository } from 'typeorm';
 import User from '../models/User.entity';
 
 import uploadConfig from '../config/upload';
@@ -12,11 +14,15 @@ interface Request {
     avatarFilename: string;
 }
 
+@Service()
 class UpdateAvatarService {
-    constructor(
-        @InjectRepository()
-        private readonly usersRepository: UsersRepository,
-    ) {}
+    private usersRepository: UsersRepository;
+
+    constructor(private readonly connection: Connection) {
+        this.usersRepository = this.connection.getCustomRepository(
+            UsersRepository,
+        );
+    }
 
     public async execute({ user_id, avatarFilename }: Request): Promise<User> {
         const user = await this.usersRepository.findOne(user_id);
