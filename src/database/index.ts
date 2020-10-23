@@ -1,10 +1,18 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-path-concat */
 /* eslint-disable prefer-template */
-import { ConnectionOptions, createConnection } from 'typeorm';
+import {  createConnection, ConnectionManager } from 'typeorm';
+import Appointment from '../models/Appointment.entity';
+import User from '../models/User.entity';
 
 
-const connectionOptions: ConnectionOptions = {
+
+
+const databaseConnection = async() => {
+
+    const connection =
+
+    await createConnection({
     type: 'postgres',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
     port: 5432,
@@ -29,11 +37,26 @@ const connectionOptions: ConnectionOptions = {
         migrationsDir: './src/database/migrations',
         entitiesDir: './src/models',
     },
+})
+
+    const userRepository = connection.getRepository(User);
+    const appointmentsRepository = connection.getRepository(Appointment);
+
+
+
+
+
+    return connection;
 };
 
-const connection = async() => {await createConnection(connectionOptions);}
 
-connection();
+databaseConnection();
+
+// eslint-disable-next-line no-return-await
+
+
+
+
 
 // {
 //     "name": "hurrybankconnection",
