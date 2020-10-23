@@ -18,7 +18,7 @@ export default class CreateAppointmentService {
         tickets,
         eventImage,
     }: Request): Promise<Appointment> {
-        const appointmentsRepository = getConnection().getRepository(
+        const appointmentsRepository = getConnection('default').getRepository(
             Appointment,
         );
 

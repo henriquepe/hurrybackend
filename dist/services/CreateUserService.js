@@ -52,7 +52,7 @@ var CreateAppointmentService = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        usersRepository = typeorm_1.getConnection().getRepository(User_1.default);
+                        usersRepository = typeorm_1.getConnection('default').getRepository(User_1.default);
                         return [4 /*yield*/, usersRepository.findOne({
                                 where: { email: email },
                             })];

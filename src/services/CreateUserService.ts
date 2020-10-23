@@ -16,7 +16,7 @@ export default class CreateAppointmentService {
         password,
         avatar,
     }: Request): Promise<User> {
-        const usersRepository = getConnection().getRepository(User);
+        const usersRepository = getConnection('default').getRepository(User);
 
         const checkIfUserAlreadyExists = await usersRepository.findOne({
             where: { email },

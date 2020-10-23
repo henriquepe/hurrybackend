@@ -51,7 +51,7 @@ var CreateAppointmentService = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        appointmentsRepository = typeorm_1.getConnection().getRepository(Appointment_1.default);
+                        appointmentsRepository = typeorm_1.getConnection('default').getRepository(Appointment_1.default);
                         appointment = appointmentsRepository.create({
                             name: name,
                             date: date,

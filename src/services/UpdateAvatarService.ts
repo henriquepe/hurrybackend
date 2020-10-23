@@ -12,7 +12,7 @@ interface Request {
 
 class UpdateAvatarService {
     public async execute({ user_id, avatarFilename }: Request): Promise<User> {
-        const usersRepository = getConnection().getRepository(User);
+        const usersRepository = getConnection('default').getRepository(User);
 
         const user = await usersRepository.findOne(user_id);
 

@@ -23,7 +23,9 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
 });
 
 appointmentsRouter.get('/', ensureAuthenticated, async (request, response) => {
-    const appointmentsRepository = getConnection().getRepository(Appointment);
+    const appointmentsRepository = getConnection('default').getRepository(
+        Appointment,
+    );
 
     const appointments = await appointmentsRepository.find();
 
