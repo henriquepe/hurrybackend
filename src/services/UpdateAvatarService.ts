@@ -1,9 +1,11 @@
-import { getRepository } from 'typeorm';
+/* eslint-disable no-useless-constructor */
 import path from 'path';
 import fs from 'fs';
+import { InjectRepository } from 'typeorm-typedi-extensions';
 import User from '../models/User.entity';
 
 import uploadConfig from '../config/upload';
+import UsersRepository from '../repositories/UsersRepository';
 
 interface Request {
     user_id: string;
@@ -11,10 +13,13 @@ interface Request {
 }
 
 class UpdateAvatarService {
-    public async execute({ user_id, avatarFilename }: Request): Promise<User> {
-        const usersRepository = getRepository(User);
+    constructor(
+        @InjectRepository()
+        private readonly usersRepository: UsersRepository,
+    ) {}
 
-        const user = await usersRepository.findOne(user_id);
+    public async execute({ user_id, avatarFilename }: Request): Promise<User> {
+        const user = await this.usersRepository.findOne(user_id);
 
         if (!user) {
             throw new Error('Only authenticated users can change avatar');
@@ -36,7 +41,7 @@ class UpdateAvatarService {
 
         user.avatar = avatarFilename;
 
-        await usersRepository.save(user);
+        await this.usersRepository.save(user);
 
         return user;
     }

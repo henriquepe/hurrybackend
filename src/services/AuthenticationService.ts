@@ -1,8 +1,10 @@
-import { getConnection, getRepository } from 'typeorm';
+/* eslint-disable no-useless-constructor */
 import { compare } from 'bcrypt';
+import { InjectRepository } from 'typeorm-typedi-extensions';
 import { sign } from 'jsonwebtoken';
 import jwt from '../config/auth';
 import User from '../models/User.entity';
+import UsersRepository from '../repositories/UsersRepository';
 
 interface Request {
     email: string;
@@ -15,10 +17,14 @@ interface Response {
 }
 
 class AuthenticationService {
-    public async execute({ email, password }: Request): Promise<Response> {
-        const usersRepository = getRepository(User);
+    // using constructor injection
+    constructor(
+        @InjectRepository()
+        private readonly usersRepository: UsersRepository,
+    ) {}
 
-        const user = await usersRepository.findOne({
+    public async execute({ email, password }: Request): Promise<Response> {
+        const user = await this.usersRepository.findOne({
             where: { email },
         });
 

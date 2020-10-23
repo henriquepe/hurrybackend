@@ -1,6 +1,8 @@
-import { getConnection, getRepository } from 'typeorm';
+/* eslint-disable no-useless-constructor */
 import { hash } from 'bcrypt';
+import { InjectRepository } from 'typeorm-typedi-extensions';
 import User from '../models/User.entity';
+import UsersRepository from '../repositories/UsersRepository';
 
 interface Request {
     name: string;
@@ -9,16 +11,19 @@ interface Request {
     avatar: string;
 }
 
-export default class CreateAppointmentService {
+export default class CreateUserService {
+    constructor(
+        @InjectRepository()
+        private readonly usersRepository: UsersRepository,
+    ) {}
+
     public async execute({
         name,
         email,
         password,
         avatar,
     }: Request): Promise<User> {
-        const usersRepository = getRepository(User);
-
-        const checkIfUserAlreadyExists = await usersRepository.findOne({
+        const checkIfUserAlreadyExists = await this.usersRepository.findOne({
             where: { email },
         });
 
@@ -28,14 +33,14 @@ export default class CreateAppointmentService {
 
         const hashedPassword = await hash(password, 8);
 
-        const user = usersRepository.create({
+        const user = this.usersRepository.create({
             name,
             email,
             password: hashedPassword,
             avatar,
         });
 
-        await usersRepository.save(user);
+        await this.usersRepository.save(user);
 
         return user;
     }

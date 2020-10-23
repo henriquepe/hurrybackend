@@ -1,4 +1,6 @@
-import { getConnection, getCustomRepository, getRepository } from 'typeorm';
+/* eslint-disable no-useless-constructor */
+
+import { InjectRepository } from 'typeorm-typedi-extensions';
 import Appointment from '../models/Appointment.entity';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
@@ -11,6 +13,11 @@ interface Request {
 }
 
 export default class CreateAppointmentService {
+    constructor(
+        @InjectRepository()
+        private readonly appointmentsRepository: AppointmentsRepository,
+    ) {}
+
     public async execute({
         name,
         date,
@@ -18,9 +25,7 @@ export default class CreateAppointmentService {
         tickets,
         eventImage,
     }: Request): Promise<Appointment> {
-        const appointmentsRepository = getRepository(Appointment);
-
-        const appointment = appointmentsRepository.create({
+        const appointment = this.appointmentsRepository.create({
             name,
             date,
             provider_id,
@@ -28,7 +33,7 @@ export default class CreateAppointmentService {
             eventImage,
         });
 
-        await appointmentsRepository.save(appointment);
+        await this.appointmentsRepository.save(appointment);
 
         return appointment;
     }

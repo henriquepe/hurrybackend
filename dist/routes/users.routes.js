@@ -9,11 +9,13 @@ const upload_1 = __importDefault(require("../config/upload"));
 const EnsureAuthenticated_1 = __importDefault(require("../middlewares/EnsureAuthenticated"));
 const CreateUserService_1 = __importDefault(require("../services/CreateUserService"));
 const UpdateAvatarService_1 = __importDefault(require("../services/UpdateAvatarService"));
+const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
 const usersRouter = express_1.Router();
 const upload = multer_1.default(upload_1.default);
+const usersRepository = new UsersRepository_1.default();
 usersRouter.post('/', async (request, response) => {
     const { name, email, password, avatar } = request.body;
-    const createUserService = new CreateUserService_1.default();
+    const createUserService = new CreateUserService_1.default(usersRepository);
     const user = await createUserService.execute({
         name,
         email,
@@ -24,7 +26,7 @@ usersRouter.post('/', async (request, response) => {
 });
 usersRouter.patch('/avatar', EnsureAuthenticated_1.default, upload.single('avatar'), async (request, response) => {
     try {
-        const updateAvatar = new UpdateAvatarService_1.default();
+        const updateAvatar = new UpdateAvatarService_1.default(usersRepository);
         const { id } = request.user;
         const user = await updateAvatar.execute({
             user_id: id,

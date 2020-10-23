@@ -1,20 +1,20 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import crypto from 'crypto';
 import uploadConfig from '../config/upload';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
-import User from '../models/User.entity';
 import CreateUserService from '../services/CreateUserService';
 import UpdateAvatarService from '../services/UpdateAvatarService';
+import UsersRepository from '../repositories/UsersRepository';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
+const usersRepository = new UsersRepository();
 
 usersRouter.post('/', async (request, response) => {
     const { name, email, password, avatar } = request.body;
 
-    const createUserService = new CreateUserService();
+    const createUserService = new CreateUserService(usersRepository);
 
     const user = await createUserService.execute({
         name,
@@ -32,7 +32,7 @@ usersRouter.patch(
     upload.single('avatar'),
     async (request, response) => {
         try {
-            const updateAvatar = new UpdateAvatarService();
+            const updateAvatar = new UpdateAvatarService(usersRepository);
 
             const { id } = request.user;
 
