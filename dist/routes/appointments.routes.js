@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const typeorm_1 = require("typeorm");
 const EnsureAuthenticated_1 = __importDefault(require("../middlewares/EnsureAuthenticated"));
-const Appointment_1 = __importDefault(require("../models/Appointment"));
+const Appointment_entity_1 = __importDefault(require("../models/Appointment.entity"));
 const CreateAppointmentService_1 = __importDefault(require("../services/CreateAppointmentService"));
 const appointmentsRouter = express_1.Router();
 appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, response) => {
@@ -22,7 +22,7 @@ appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, resp
     return response.json(appointment);
 });
 appointmentsRouter.get('/', EnsureAuthenticated_1.default, async (request, response) => {
-    const appointmentsRepository = typeorm_1.getRepository(Appointment_1.default);
+    const appointmentsRepository = typeorm_1.getRepository(Appointment_entity_1.default);
     const appointments = await appointmentsRepository.find();
     return response.json(appointments);
 });

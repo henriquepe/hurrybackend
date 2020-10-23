@@ -12,7 +12,7 @@ const connectionOptions: ConnectionOptions = {
     username: 'hurrydb',
     password: 'hurrydbpassword',
     entities: [
-        path.resolve(__dirname + '/models/*.js')
+        path.resolve(__dirname + '/models/*.entity.js')
 
 
     ],

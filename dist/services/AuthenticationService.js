@@ -7,10 +7,10 @@ const typeorm_1 = require("typeorm");
 const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const auth_1 = __importDefault(require("../config/auth"));
-const User_1 = __importDefault(require("../models/User"));
+const User_entity_1 = __importDefault(require("../models/User.entity"));
 class AuthenticationService {
     async execute({ email, password }) {
-        const usersRepository = typeorm_1.getRepository(User_1.default);
+        const usersRepository = typeorm_1.getRepository(User_entity_1.default);
         const user = await usersRepository.findOne({
             where: { email },
         });

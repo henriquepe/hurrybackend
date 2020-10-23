@@ -4,7 +4,7 @@ import multer from 'multer';
 import crypto from 'crypto';
 import uploadConfig from '../config/upload';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
-import User from '../models/User';
+import User from '../models/User.entity';
 import CreateUserService from '../services/CreateUserService';
 import UpdateAvatarService from '../services/UpdateAvatarService';
 

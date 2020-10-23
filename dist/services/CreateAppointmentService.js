@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Appointment_1 = __importDefault(require("../models/Appointment"));
+const Appointment_entity_1 = __importDefault(require("../models/Appointment.entity"));
 class CreateAppointmentService {
     async execute({ name, date, provider_id, tickets, eventImage, }) {
-        const appointmentsRepository = typeorm_1.getRepository(Appointment_1.default);
+        const appointmentsRepository = typeorm_1.getRepository(Appointment_entity_1.default);
         const appointment = appointmentsRepository.create({
             name,
             date,

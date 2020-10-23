@@ -2,7 +2,7 @@ import { getConnection, getRepository } from 'typeorm';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import jwt from '../config/auth';
-import User from '../models/User';
+import User from '../models/User.entity';
 
 interface Request {
     email: string;

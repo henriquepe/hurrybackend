@@ -6,11 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
-const User_1 = __importDefault(require("../models/User"));
+const User_entity_1 = __importDefault(require("../models/User.entity"));
 const upload_1 = __importDefault(require("../config/upload"));
 class UpdateAvatarService {
     async execute({ user_id, avatarFilename }) {
-        const usersRepository = typeorm_1.getRepository(User_1.default);
+        const usersRepository = typeorm_1.getRepository(User_entity_1.default);
         const user = await usersRepository.findOne(user_id);
         if (!user) {
             throw new Error('Only authenticated users can change avatar');

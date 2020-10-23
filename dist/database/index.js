@@ -16,7 +16,7 @@ const connectionOptions = {
     username: 'hurrydb',
     password: 'hurrydbpassword',
     entities: [
-        path_1.default.resolve(__dirname + '/models/*.js')
+        path_1.default.resolve(__dirname + '/models/*.entity.js')
     ],
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {

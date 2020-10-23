@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
-import Appointment from '../models/Appointment';
+import Appointment from '../models/Appointment.entity';
 import CreateAppointmentService from '../services/CreateAppointmentService';
 
 const appointmentsRouter = Router();

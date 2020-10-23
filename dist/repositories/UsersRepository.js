@@ -10,10 +10,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const User_1 = __importDefault(require("../models/User"));
+const User_entity_1 = __importDefault(require("../models/User.entity"));
 let UsersRepository = class UsersRepository extends typeorm_1.Repository {
 };
 UsersRepository = __decorate([
-    typeorm_1.EntityRepository(User_1.default)
+    typeorm_1.EntityRepository(User_entity_1.default)
 ], UsersRepository);
 exports.default = UsersRepository;

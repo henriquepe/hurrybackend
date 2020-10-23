@@ -1,5 +1,5 @@
 import { getConnection, getCustomRepository, getRepository } from 'typeorm';
-import Appointment from '../models/Appointment';
+import Appointment from '../models/Appointment.entity';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
 interface Request {

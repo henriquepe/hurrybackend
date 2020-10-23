@@ -10,10 +10,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const Appointment_1 = __importDefault(require("../models/Appointment"));
+const Appointment_entity_1 = __importDefault(require("../models/Appointment.entity"));
 let AppointmentsRepository = class AppointmentsRepository extends typeorm_1.Repository {
 };
 AppointmentsRepository = __decorate([
-    typeorm_1.EntityRepository(Appointment_1.default)
+    typeorm_1.EntityRepository(Appointment_entity_1.default)
 ], AppointmentsRepository);
 exports.default = AppointmentsRepository;
