@@ -1,22 +1,23 @@
-import { createConnection } from 'typeorm';
-import User from '../models/User';
-import Appointment from '../models/Appointment';
+import { ConnectionOptions, createConnection } from 'typeorm';
+import path from 'path';
 
-createConnection({
+const connectionOptions: ConnectionOptions = {
     type: 'postgres',
     database: 'hurrydb',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
-    entities: ['../models/**/*.entity.js'],
+    entities: [path.resolve(`${__dirname}/models/*.js`)],
 
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',
         entitiesDir: './src/models',
     },
-}).then(response => response);
+};
+
+createConnection(connectionOptions);
 
 // {
 //     "name": "hurrybankconnection",
