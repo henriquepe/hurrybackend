@@ -1,13 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-path-concat */
 /* eslint-disable prefer-template */
 const typeorm_1 = require("typeorm");
-const path_1 = __importDefault(require("path"));
 const connectionOptions = {
     type: 'postgres',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
@@ -16,8 +12,13 @@ const connectionOptions = {
     password: 'hurrydbpassword',
     database: 'hurrydb',
     entities: [
-        path_1.default.resolve(__dirname + '/models/*.entity.js')
+        // // eslint-disable-next-line global-require
+        // require('../models/Appointment.entity'),
+        // // eslint-disable-next-line global-require
+        // require('../models/User.entity'),
+        "./dist/models/*.js"
     ],
+    migrationsRun: true,
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',
@@ -25,6 +26,7 @@ const connectionOptions = {
     },
 };
 typeorm_1.createConnection(connectionOptions).then(response => {
+    console.log(response);
     return response.connect;
 });
 // {

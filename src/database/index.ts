@@ -2,7 +2,7 @@
 /* eslint-disable no-path-concat */
 /* eslint-disable prefer-template */
 import { ConnectionOptions, createConnection } from 'typeorm';
-import path from 'path';
+
 
 const connectionOptions: ConnectionOptions = {
     type: 'postgres',
@@ -11,12 +11,19 @@ const connectionOptions: ConnectionOptions = {
     username: 'hurrydb',
     password: 'hurrydbpassword',
     database: 'hurrydb',
+
     entities: [
-        path.resolve(__dirname + '/models/*.entity.js')
+        // // eslint-disable-next-line global-require
+        // require('../models/Appointment.entity'),
+        // // eslint-disable-next-line global-require
+        // require('../models/User.entity'),
+        "./dist/models/*.js"
+
+
 
 
     ],
-
+    migrationsRun: true,
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',
@@ -25,6 +32,7 @@ const connectionOptions: ConnectionOptions = {
 };
 
 createConnection(connectionOptions).then(response => {
+    console.log(response);
     return response.connect;
 });
 
