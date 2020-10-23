@@ -28,8 +28,8 @@ const databaseConnection = async() => {
 
 
     ],
-    synchronize: true,
-    migrationsRun: true,
+
+
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',

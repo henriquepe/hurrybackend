@@ -20,8 +20,6 @@ const databaseConnection = async () => {
         entities: [
             "./dist/**/**/**.entity{.js, .ts}"
         ],
-        synchronize: true,
-        migrationsRun: true,
         migrations: ['./dist/database/**/migrations/*.js'],
         cli: {
             migrationsDir: './src/database/migrations',
