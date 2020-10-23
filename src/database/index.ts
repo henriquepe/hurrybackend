@@ -1,5 +1,7 @@
+/* eslint-disable no-return-await */
 import { createConnection, useContainer } from 'typeorm';
 import { Container } from 'typedi';
+
 import Appointment from '../models/Appointment.entity';
 import User from '../models/User.entity';
 
@@ -20,6 +22,8 @@ const connection = createConnection({
         migrationsDir: './src/database/migrations',
         entitiesDir: './dist/models',
     },
+}).then(response => {
+    return response;
 });
 
 export default connection;

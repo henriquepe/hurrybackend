@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import { compare } from 'bcrypt';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+
 import { Service } from 'typedi';
 import { sign } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
@@ -40,7 +40,7 @@ class AuthenticationService {
             throw new Error('email or password invalid');
         }
 
-        const verifyPassword = compare(password, user.password);
+        const verifyPassword = await compare(password, user.password);
 
         if (!verifyPassword) {
             throw new Error('email or password invalid');

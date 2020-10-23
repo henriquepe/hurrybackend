@@ -29,7 +29,7 @@ appointmentsRouter.get('/', ensureAuthenticated, async (request, response) => {
         await connection,
     );
 
-    const appointments = createListAppointmentsService.execute();
+    const appointments = await createListAppointmentsService.execute();
 
     return response.json(appointments);
 });

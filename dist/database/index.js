@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-return-await */
 const typeorm_1 = require("typeorm");
 const typedi_1 = require("typedi");
 const Appointment_entity_1 = __importDefault(require("../models/Appointment.entity"));
@@ -21,6 +22,8 @@ const connection = typeorm_1.createConnection({
         migrationsDir: './src/database/migrations',
         entitiesDir: './dist/models',
     },
+}).then(response => {
+    return response;
 });
 exports.default = connection;
 // eslint-disable-next-line no-return-await

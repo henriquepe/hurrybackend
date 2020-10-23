@@ -23,7 +23,7 @@ appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, resp
 });
 appointmentsRouter.get('/', EnsureAuthenticated_1.default, async (request, response) => {
     const createListAppointmentsService = new ListAppointmentsService_1.default(await database_1.default);
-    const appointments = createListAppointmentsService.execute();
+    const appointments = await createListAppointmentsService.execute();
     return response.json(appointments);
 });
 exports.default = appointmentsRouter;

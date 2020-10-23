@@ -32,7 +32,7 @@ let AuthenticationService = class AuthenticationService {
         if (!user) {
             throw new Error('email or password invalid');
         }
-        const verifyPassword = bcrypt_1.compare(password, user.password);
+        const verifyPassword = await bcrypt_1.compare(password, user.password);
         if (!verifyPassword) {
             throw new Error('email or password invalid');
         }
