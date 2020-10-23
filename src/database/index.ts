@@ -6,11 +6,11 @@ import path from 'path';
 
 const connectionOptions: ConnectionOptions = {
     type: 'postgres',
-    database: 'hurrydb',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
+    database: 'hurrydb',
     entities: [
         path.resolve(__dirname + '/models/*.entity.js')
 
@@ -24,7 +24,9 @@ const connectionOptions: ConnectionOptions = {
     },
 };
 
-createConnection(connectionOptions);
+createConnection(connectionOptions).then(response => {
+    return response.connect;
+});
 
 // {
 //     "name": "hurrybankconnection",

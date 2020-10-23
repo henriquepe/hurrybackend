@@ -10,11 +10,11 @@ const typeorm_1 = require("typeorm");
 const path_1 = __importDefault(require("path"));
 const connectionOptions = {
     type: 'postgres',
-    database: 'hurrydb',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
+    database: 'hurrydb',
     entities: [
         path_1.default.resolve(__dirname + '/models/*.entity.js')
     ],
@@ -24,7 +24,9 @@ const connectionOptions = {
         entitiesDir: './src/models',
     },
 };
-typeorm_1.createConnection(connectionOptions);
+typeorm_1.createConnection(connectionOptions).then(response => {
+    return response.connect;
+});
 // {
 //     "name": "hurrybankconnection",
 //     "type": "postgres",
