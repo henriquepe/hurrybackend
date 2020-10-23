@@ -1,11 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable prettier/prettier */
 const typeorm_1 = require("typeorm");
-const path_1 = __importDefault(require("path"));
 typeorm_1.createConnection({
     type: 'postgres',
     database: 'hurrydb',
@@ -13,8 +8,7 @@ typeorm_1.createConnection({
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
-    // eslint-disable-next-line prefer-template
-    entities: [path_1.default.resolve(__dirname, '/../**/**.entity{.ts,.js}')],
+    entities: ['../models/**/*.entity.js'],
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',

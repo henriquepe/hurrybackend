@@ -1,7 +1,6 @@
-/* eslint-disable prettier/prettier */
 import { createConnection } from 'typeorm';
-import path from 'path';
-
+import User from '../models/User';
+import Appointment from '../models/Appointment';
 
 createConnection({
     type: 'postgres',
@@ -10,9 +9,7 @@ createConnection({
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
-
-    // eslint-disable-next-line prefer-template
-    entities: [ path.resolve(__dirname, '/../**/**.entity{.ts,.js}')],
+    entities: ['../models/**/*.entity.js'],
 
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
