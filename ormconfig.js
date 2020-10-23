@@ -7,7 +7,7 @@ module.exports = {
     "port": 5432,
     "username": "hurrydb",
     "password": "hurrydbpassword",
-    "entities": ["./dist/models/**/*.js"],
+    "entities": "./dist/models/**/*.js",
     "migrations": ["./dist/database/**/migrations/*.js"],
     "cli": {
         "migrationsDir": "./src/database/migrations",
