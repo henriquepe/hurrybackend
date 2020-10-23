@@ -56,7 +56,7 @@ sessionsRouter.post('/', function (request, response) { return __awaiter(void 0,
                     })];
             case 1:
                 _b = _c.sent(), user = _b.user, token = _b.token;
-                delete  ? user.password : ;
+                delete user.password;
                 return [2 /*return*/, response.status(200).json({ user: user, token: token })];
             case 2:
                 err_1 = _c.sent();
