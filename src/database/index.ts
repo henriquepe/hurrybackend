@@ -1,3 +1,6 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-path-concat */
+/* eslint-disable prefer-template */
 import { ConnectionOptions, createConnection } from 'typeorm';
 import path from 'path';
 
@@ -8,7 +11,11 @@ const connectionOptions: ConnectionOptions = {
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
-    entities: [path.resolve(`${__dirname}/models/*.js`)],
+    entities: [
+        path.resolve(__dirname + '/models/*.js')
+
+
+    ],
 
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
