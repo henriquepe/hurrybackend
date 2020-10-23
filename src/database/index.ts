@@ -31,10 +31,9 @@ const connectionOptions: ConnectionOptions = {
     },
 };
 
-createConnection(connectionOptions).then(response => {
-    console.log(response);
-    return response.connect;
-});
+const connection = async() => {await createConnection(connectionOptions);}
+
+connection();
 
 // {
 //     "name": "hurrybankconnection",

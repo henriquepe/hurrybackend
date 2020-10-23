@@ -25,10 +25,8 @@ const connectionOptions = {
         entitiesDir: './src/models',
     },
 };
-typeorm_1.createConnection(connectionOptions).then(response => {
-    console.log(response);
-    return response.connect;
-});
+const connection = async () => { await typeorm_1.createConnection(connectionOptions); };
+connection();
 // {
 //     "name": "hurrybankconnection",
 //     "type": "postgres",
