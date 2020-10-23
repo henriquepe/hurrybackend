@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var typeorm_1 = require("typeorm");
-var AppointmentsRepository_1 = __importDefault(require("../repositories/AppointmentsRepository"));
+var Appointment_1 = __importDefault(require("../models/Appointment"));
 var CreateAppointmentService = /** @class */ (function () {
     function CreateAppointmentService() {
     }
@@ -51,7 +51,7 @@ var CreateAppointmentService = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        appointmentsRepository = typeorm_1.getCustomRepository(AppointmentsRepository_1.default);
+                        appointmentsRepository = typeorm_1.getConnection(process.env.NODE_ENV).getRepository(Appointment_1.default);
                         appointment = appointmentsRepository.create({
                             name: name,
                             date: date,

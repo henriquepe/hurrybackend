@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import { compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import jwt from '../config/auth';
@@ -16,7 +16,9 @@ interface Response {
 
 class AuthenticationService {
     public async execute({ email, password }: Request): Promise<Response> {
-        const usersRepository = getRepository(User);
+        const usersRepository = getConnection(
+            process.env.NODE_ENV,
+        ).getRepository(User);
 
         const user = await usersRepository.findOne({
             where: { email },

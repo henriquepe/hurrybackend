@@ -54,7 +54,7 @@ var UpdateAvatarService = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        usersRepository = typeorm_1.getRepository(User_1.default);
+                        usersRepository = typeorm_1.getConnection(process.env.NODE_ENV).getRepository(User_1.default);
                         return [4 /*yield*/, usersRepository.findOne(user_id)];
                     case 1:
                         user = _b.sent();

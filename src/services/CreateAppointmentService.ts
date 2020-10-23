@@ -1,4 +1,4 @@
-import { getCustomRepository } from 'typeorm';
+import { getConnection, getCustomRepository, getRepository } from 'typeorm';
 import Appointment from '../models/Appointment';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
@@ -18,9 +18,9 @@ export default class CreateAppointmentService {
         tickets,
         eventImage,
     }: Request): Promise<Appointment> {
-        const appointmentsRepository = getCustomRepository(
-            AppointmentsRepository,
-        );
+        const appointmentsRepository = getConnection(
+            process.env.NODE_ENV,
+        ).getRepository(Appointment);
 
         const appointment = appointmentsRepository.create({
             name,

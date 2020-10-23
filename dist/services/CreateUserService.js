@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var typeorm_1 = require("typeorm");
 var bcrypt_1 = require("bcrypt");
-var UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
+var User_1 = __importDefault(require("../models/User"));
 var CreateAppointmentService = /** @class */ (function () {
     function CreateAppointmentService() {
     }
@@ -52,7 +52,7 @@ var CreateAppointmentService = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        usersRepository = typeorm_1.getCustomRepository(UsersRepository_1.default);
+                        usersRepository = typeorm_1.getConnection(process.env.NODE_ENV).getRepository(User_1.default);
                         return [4 /*yield*/, usersRepository.findOne({
                                 where: { email: email },
                             })];

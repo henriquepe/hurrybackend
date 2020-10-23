@@ -1,4 +1,4 @@
-import { getCustomRepository } from 'typeorm';
+import { getConnection, getCustomRepository, getRepository } from 'typeorm';
 import { hash } from 'bcrypt';
 import User from '../models/User';
 import UsersRepository from '../repositories/UsersRepository';
@@ -17,7 +17,9 @@ export default class CreateAppointmentService {
         password,
         avatar,
     }: Request): Promise<User> {
-        const usersRepository = getCustomRepository(UsersRepository);
+        const usersRepository = getConnection(
+            process.env.NODE_ENV,
+        ).getRepository(User);
 
         const checkIfUserAlreadyExists = await usersRepository.findOne({
             where: { email },
