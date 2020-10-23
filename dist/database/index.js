@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var typeorm_1 = require("typeorm");
-var User_1 = __importDefault(require("../models/User"));
-var Appointment_1 = __importDefault(require("../models/Appointment"));
+const typeorm_1 = require("typeorm");
+const User_1 = __importDefault(require("../models/User"));
+const Appointment_1 = __importDefault(require("../models/Appointment"));
 typeorm_1.createConnection({
     name: 'hurrybankconnection',
     type: 'postgres',
@@ -20,7 +20,7 @@ typeorm_1.createConnection({
         migrationsDir: './src/database/migrations',
         entitiesDir: './src/models',
     },
-});
+}).then(response => response);
 // {
 //     "name": "hurrybankconnection",
 //     "type": "postgres",

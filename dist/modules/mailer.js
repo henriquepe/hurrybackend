@@ -4,18 +4,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable @typescript-eslint/no-var-requires */
-var nodemailer_1 = __importDefault(require("nodemailer"));
-var path_1 = __importDefault(require("path"));
-var mail_1 = __importDefault(require("../config/mail"));
-var hbs = require('nodemailer-express-handlebars');
-var _a = mail_1.default.auth, user = _a.user, pass = _a.pass;
-var host = mail_1.default.host, port = mail_1.default.port;
-var transport = nodemailer_1.default.createTransport({
-    host: host,
-    port: port,
+const nodemailer_1 = __importDefault(require("nodemailer"));
+const path_1 = __importDefault(require("path"));
+const mail_1 = __importDefault(require("../config/mail"));
+const hbs = require('nodemailer-express-handlebars');
+const { user, pass } = mail_1.default.auth;
+const { host, port } = mail_1.default;
+const transport = nodemailer_1.default.createTransport({
+    host,
+    port,
     auth: {
-        user: user,
-        pass: pass,
+        user,
+        pass,
     },
 });
 transport.use('compile', hbs({

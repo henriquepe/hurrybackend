@@ -9,41 +9,38 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var typeorm_1 = require("typeorm");
-var User = /** @class */ (function () {
-    function User() {
-    }
-    __decorate([
-        typeorm_1.PrimaryGeneratedColumn('uuid'),
-        __metadata("design:type", String)
-    ], User.prototype, "id", void 0);
-    __decorate([
-        typeorm_1.Column('varchar'),
-        __metadata("design:type", String)
-    ], User.prototype, "name", void 0);
-    __decorate([
-        typeorm_1.Column('varchar'),
-        __metadata("design:type", String)
-    ], User.prototype, "email", void 0);
-    __decorate([
-        typeorm_1.Column('varchar'),
-        __metadata("design:type", String)
-    ], User.prototype, "password", void 0);
-    __decorate([
-        typeorm_1.Column('varchar'),
-        __metadata("design:type", String)
-    ], User.prototype, "avatar", void 0);
-    __decorate([
-        typeorm_1.CreateDateColumn(),
-        __metadata("design:type", Date)
-    ], User.prototype, "created_at", void 0);
-    __decorate([
-        typeorm_1.UpdateDateColumn(),
-        __metadata("design:type", Date)
-    ], User.prototype, "updated_at", void 0);
-    User = __decorate([
-        typeorm_1.Entity('users')
-    ], User);
-    return User;
-}());
+const typeorm_1 = require("typeorm");
+let User = class User {
+};
+__decorate([
+    typeorm_1.PrimaryGeneratedColumn('uuid'),
+    __metadata("design:type", String)
+], User.prototype, "id", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], User.prototype, "name", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], User.prototype, "email", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], User.prototype, "password", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], User.prototype, "avatar", void 0);
+__decorate([
+    typeorm_1.CreateDateColumn(),
+    __metadata("design:type", Date)
+], User.prototype, "created_at", void 0);
+__decorate([
+    typeorm_1.UpdateDateColumn(),
+    __metadata("design:type", Date)
+], User.prototype, "updated_at", void 0);
+User = __decorate([
+    typeorm_1.Entity('users')
+], User);
 exports.default = User;

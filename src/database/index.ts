@@ -16,7 +16,7 @@ createConnection({
         migrationsDir: './src/database/migrations',
         entitiesDir: './src/models',
     },
-});
+}).then(response => response);
 
 // {
 //     "name": "hurrybankconnection",
