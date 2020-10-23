@@ -18,7 +18,8 @@ const databaseConnection = async () => {
         password: 'hurrydbpassword',
         database: 'hurrydb',
         entities: [
-            "./dist/**/**/**.entity{.js, .ts}"
+            User_entity_1.default,
+            Appointment_entity_1.default
         ],
         migrations: ['./dist/database/**/migrations/*.js'],
         cli: {

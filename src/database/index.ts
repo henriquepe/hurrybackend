@@ -13,6 +13,7 @@ const databaseConnection = async() => {
     const connection =
 
     await createConnection({
+
     type: 'postgres',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
     port: 5432,
@@ -22,7 +23,8 @@ const databaseConnection = async() => {
 
     entities: [
 
-        "./dist/**/**/**.entity{.js, .ts}"
+        User,
+        Appointment
 
 
 
