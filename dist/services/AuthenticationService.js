@@ -10,7 +10,7 @@ const auth_1 = __importDefault(require("../config/auth"));
 const User_1 = __importDefault(require("../models/User"));
 class AuthenticationService {
     async execute({ email, password }) {
-        const usersRepository = typeorm_1.getConnection('hurrybankconnection').getRepository(User_1.default);
+        const usersRepository = typeorm_1.getConnection().getRepository(User_1.default);
         const user = await usersRepository.findOne({
             where: { email },
         });

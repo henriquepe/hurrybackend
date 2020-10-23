@@ -3,7 +3,6 @@ import User from '../models/User';
 import Appointment from '../models/Appointment';
 
 createConnection({
-    name: 'hurrybankconnection',
     type: 'postgres',
     database: 'hurrydb',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',

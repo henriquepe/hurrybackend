@@ -16,9 +16,7 @@ interface Response {
 
 class AuthenticationService {
     public async execute({ email, password }: Request): Promise<Response> {
-        const usersRepository = getConnection(
-            'hurrybankconnection',
-        ).getRepository(User);
+        const usersRepository = getConnection().getRepository(User);
 
         const user = await usersRepository.findOne({
             where: { email },

@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 typeorm_1.createConnection({
-    name: 'hurrybankconnection',
     type: 'postgres',
     database: 'hurrydb',
     host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',

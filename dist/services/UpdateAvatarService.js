@@ -10,7 +10,7 @@ const User_1 = __importDefault(require("../models/User"));
 const upload_1 = __importDefault(require("../config/upload"));
 class UpdateAvatarService {
     async execute({ user_id, avatarFilename }) {
-        const usersRepository = typeorm_1.getConnection('hurrybankconnection').getRepository(User_1.default);
+        const usersRepository = typeorm_1.getConnection().getRepository(User_1.default);
         const user = await usersRepository.findOne(user_id);
         if (!user) {
             throw new Error('Only authenticated users can change avatar');
