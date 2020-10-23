@@ -1,4 +1,6 @@
 import { createConnection } from 'typeorm';
+import User from '../models/User';
+import Appointment from '../models/Appointment';
 
 createConnection({
     name: 'hurrybankconnection',
@@ -8,7 +10,7 @@ createConnection({
     port: 5432,
     username: 'hurrydb',
     password: 'hurrydbpassword',
-    entities: ['./dist/models/**/*.js'],
+    entities: [User, Appointment],
     migrations: ['./dist/database/**/migrations/*.js'],
     cli: {
         migrationsDir: './src/database/migrations',
