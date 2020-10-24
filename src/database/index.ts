@@ -2,31 +2,18 @@
 import { createConnection, useContainer } from 'typeorm';
 import { Container } from 'typedi';
 
-import Appointment from '../models/Appointment.entity';
-import User from '../models/User.entity';
+// import Appointment from '../models/Appointment.entity';
+// import User from '../models/User.entity';
 
 useContainer(Container);
 
-const connection = createConnection({
-    type: 'postgres',
-    host: 'hurrydbinstance2.c1ekyxn2vbik.us-east-2.rds.amazonaws.com',
-    port: 5432,
-    username: 'hurrydb',
-    password: 'hurrydbpassword',
-    database: 'hurrydb',
-
-    entities: [User, Appointment],
-
-    migrations: ['./dist/database/**/migrations/*.js'],
-    cli: {
-        migrationsDir: './src/database/migrations',
-        entitiesDir: './dist/models',
-    },
-}).then(response => {
+const connection = createConnection().then(async response => {
     return response;
 });
 
 export default connection;
+
+//
 
 // eslint-disable-next-line no-return-await
 
