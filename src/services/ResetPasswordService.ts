@@ -42,7 +42,7 @@ class ResetPasswordService {
 
         await this.usersRepository.save(validUser);
 
-        return validUserNewPassword;
+        return randomTextToNewPasswordString;
     }
 }
 

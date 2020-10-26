@@ -35,7 +35,7 @@ let ResetPasswordService = class ResetPasswordService {
         const validUserNewPassword = hashedRandomTextToNewPassword;
         validUser.password = validUserNewPassword;
         await this.usersRepository.save(validUser);
-        return validUserNewPassword;
+        return randomTextToNewPasswordString;
     }
 };
 ResetPasswordService = __decorate([
