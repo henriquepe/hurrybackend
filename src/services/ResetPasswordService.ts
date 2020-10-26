@@ -1,4 +1,5 @@
-import { createHash } from 'crypto';
+import { randomBytes } from 'crypto';
+import { hash } from 'bcrypt';
 import { Service } from 'typedi';
 import { Connection } from 'typeorm';
 import UsersRepository from '../repositories/UsersRepository';
@@ -26,9 +27,14 @@ class ResetPasswordService {
             throw new Error('this email does not belongs to any of our users');
         }
 
-        const validUserNewPassword = String(createHash('md5'));
+        const randomTextToNewPassword = randomBytes(8);
 
-        validUser.password = validUserNewPassword;
+        const hashedRandomTextToNewPassword = await hash(
+            randomTextToNewPassword,
+            8,
+        );
+
+        const validUserNewPassword = hashedRandomTextToNewPassword;
 
         await this.usersRepository.save(validUser);
 

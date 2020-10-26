@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const crypto_1 = require("crypto");
+const bcrypt_1 = require("bcrypt");
 const typedi_1 = require("typedi");
 const typeorm_1 = require("typeorm");
 const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
@@ -28,8 +29,9 @@ let ResetPasswordService = class ResetPasswordService {
         if (!validUser) {
             throw new Error('this email does not belongs to any of our users');
         }
-        const validUserNewPassword = String(crypto_1.createHash('md5'));
-        validUser.password = validUserNewPassword;
+        const randomTextToNewPassword = crypto_1.randomBytes(8);
+        const hashedRandomTextToNewPassword = await bcrypt_1.hash(randomTextToNewPassword, 8);
+        const validUserNewPassword = hashedRandomTextToNewPassword;
         await this.usersRepository.save(validUser);
         return validUserNewPassword;
     }
