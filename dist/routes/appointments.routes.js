@@ -21,7 +21,8 @@ appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, resp
     });
     return response.json(appointment);
 });
-appointmentsRouter.get('/', EnsureAuthenticated_1.default, async (request, response) => {
+// lembrar de incluir autenticação ensureAuthenticated
+appointmentsRouter.get('/', async (request, response) => {
     const createListAppointmentsService = new ListAppointmentsService_1.default(await database_1.default);
     const appointments = await createListAppointmentsService.execute();
     return response.json(appointments);
