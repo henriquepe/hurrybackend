@@ -6,7 +6,6 @@ import { Container } from 'typedi';
 // import User from '../models/User.entity';
 
 useContainer(Container);
-
 const connection = createConnection().then(async response => {
     return response;
 });

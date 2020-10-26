@@ -10,6 +10,7 @@ const EnsureAuthenticated_1 = __importDefault(require("../middlewares/EnsureAuth
 const CreateUserService_1 = __importDefault(require("../services/CreateUserService"));
 const UpdateAvatarService_1 = __importDefault(require("../services/UpdateAvatarService"));
 const database_1 = __importDefault(require("../database"));
+const ResetPasswordService_1 = __importDefault(require("../services/ResetPasswordService"));
 const usersRouter = express_1.Router();
 const upload = multer_1.default(upload_1.default);
 usersRouter.post('/', async (request, response) => {
@@ -37,19 +38,10 @@ usersRouter.patch('/avatar', EnsureAuthenticated_1.default, upload.single('avata
         return response.status(400).json({ error: err.message });
     }
 });
-// usersRouter.post('/forgotPassword', async (request, response) => {
-//     const { email } = request.body;
-//     try {
-//         const usersRepository = getRepository(User);
-//         const user = usersRepository.findOne({ where: email });
-//         if (!email) {
-//             throw new Error('User not found');
-//         }
-//         const token = crypto.randomBytes(20).toString('hex');
-//         const now = new Date();
-//         now.setHours(now.getHours() + 1);
-//     } catch (err) {
-//         return response.status(400).json({ error: err.message });
-//     }
-// });
+usersRouter.post('/resetPassword', async (request, response) => {
+    const { email } = request.body;
+    const resetPasswordService = new ResetPasswordService_1.default(await database_1.default);
+    const newPassword = resetPasswordService.execute({ email });
+    return response.json({ password: newPassword });
+});
 exports.default = usersRouter;

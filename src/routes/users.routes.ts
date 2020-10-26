@@ -6,6 +6,7 @@ import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import CreateUserService from '../services/CreateUserService';
 import UpdateAvatarService from '../services/UpdateAvatarService';
 import connection from '../database';
+import ResetPasswordService from '../services/ResetPasswordService';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -47,25 +48,14 @@ usersRouter.patch(
     },
 );
 
-// usersRouter.post('/forgotPassword', async (request, response) => {
-//     const { email } = request.body;
+usersRouter.post('/resetPassword', async (request, response) => {
+    const { email } = request.body;
 
-//     try {
-//         const usersRepository = getRepository(User);
+    const resetPasswordService = new ResetPasswordService(await connection);
 
-//         const user = usersRepository.findOne({ where: email });
+    const newPassword = resetPasswordService.execute({ email });
 
-//         if (!email) {
-//             throw new Error('User not found');
-//         }
-
-//         const token = crypto.randomBytes(20).toString('hex');
-
-//         const now = new Date();
-//         now.setHours(now.getHours() + 1);
-//     } catch (err) {
-//         return response.status(400).json({ error: err.message });
-//     }
-// });
+    return response.json({ password: newPassword });
+});
 
 export default usersRouter;
