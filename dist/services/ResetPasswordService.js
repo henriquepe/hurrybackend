@@ -32,6 +32,7 @@ let ResetPasswordService = class ResetPasswordService {
         const randomTextToNewPassword = crypto_1.randomBytes(8);
         const hashedRandomTextToNewPassword = await bcrypt_1.hash(randomTextToNewPassword, 8);
         const validUserNewPassword = hashedRandomTextToNewPassword;
+        validUser.password = validUserNewPassword;
         await this.usersRepository.save(validUser);
         return validUserNewPassword;
     }
