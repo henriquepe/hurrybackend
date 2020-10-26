@@ -7,6 +7,7 @@ import CreateUserService from '../services/CreateUserService';
 import UpdateAvatarService from '../services/UpdateAvatarService';
 import connection from '../database';
 import ResetPasswordService from '../services/ResetPasswordService';
+import SendNewPasswordByEmailService from '../services/SendNewPasswordByEmailService';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -54,6 +55,13 @@ usersRouter.post('/resetPassword', async (request, response) => {
     const resetPasswordService = new ResetPasswordService(await connection);
 
     const newPassword = await resetPasswordService.execute({ email });
+
+    const sendNewPasswordByEmailService = new SendNewPasswordByEmailService();
+
+    await sendNewPasswordByEmailService.execute({
+        email,
+        password: newPassword,
+    });
 
     return response.json({ password: newPassword });
 });

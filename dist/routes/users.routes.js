@@ -11,6 +11,7 @@ const CreateUserService_1 = __importDefault(require("../services/CreateUserServi
 const UpdateAvatarService_1 = __importDefault(require("../services/UpdateAvatarService"));
 const database_1 = __importDefault(require("../database"));
 const ResetPasswordService_1 = __importDefault(require("../services/ResetPasswordService"));
+const SendNewPasswordByEmailService_1 = __importDefault(require("../services/SendNewPasswordByEmailService"));
 const usersRouter = express_1.Router();
 const upload = multer_1.default(upload_1.default);
 usersRouter.post('/', async (request, response) => {
@@ -42,6 +43,11 @@ usersRouter.post('/resetPassword', async (request, response) => {
     const { email } = request.body;
     const resetPasswordService = new ResetPasswordService_1.default(await database_1.default);
     const newPassword = await resetPasswordService.execute({ email });
+    const sendNewPasswordByEmailService = new SendNewPasswordByEmailService_1.default();
+    await sendNewPasswordByEmailService.execute({
+        email,
+        password: newPassword,
+    });
     return response.json({ password: newPassword });
 });
 exports.default = usersRouter;
