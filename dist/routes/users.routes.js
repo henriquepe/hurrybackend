@@ -41,7 +41,7 @@ usersRouter.patch('/avatar', EnsureAuthenticated_1.default, upload.single('avata
 usersRouter.post('/resetPassword', async (request, response) => {
     const { email } = request.body;
     const resetPasswordService = new ResetPasswordService_1.default(await database_1.default);
-    const newPassword = resetPasswordService.execute({ email });
+    const newPassword = await resetPasswordService.execute({ email });
     return response.json({ password: newPassword });
 });
 exports.default = usersRouter;

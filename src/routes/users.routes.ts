@@ -53,7 +53,7 @@ usersRouter.post('/resetPassword', async (request, response) => {
 
     const resetPasswordService = new ResetPasswordService(await connection);
 
-    const newPassword = resetPasswordService.execute({ email });
+    const newPassword = await resetPasswordService.execute({ email });
 
     return response.json({ password: newPassword });
 });
