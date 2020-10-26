@@ -29,8 +29,10 @@ class ResetPasswordService {
 
         const randomTextToNewPassword = randomBytes(8);
 
+        const randomTextToNewPasswordString = randomTextToNewPassword.toString();
+
         const hashedRandomTextToNewPassword = await hash(
-            randomTextToNewPassword,
+            randomTextToNewPasswordString,
             8,
         );
 

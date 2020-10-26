@@ -30,7 +30,8 @@ let ResetPasswordService = class ResetPasswordService {
             throw new Error('this email does not belongs to any of our users');
         }
         const randomTextToNewPassword = crypto_1.randomBytes(8);
-        const hashedRandomTextToNewPassword = await bcrypt_1.hash(randomTextToNewPassword, 8);
+        const randomTextToNewPasswordString = randomTextToNewPassword.toString();
+        const hashedRandomTextToNewPassword = await bcrypt_1.hash(randomTextToNewPasswordString, 8);
         const validUserNewPassword = hashedRandomTextToNewPassword;
         validUser.password = validUserNewPassword;
         await this.usersRepository.save(validUser);
