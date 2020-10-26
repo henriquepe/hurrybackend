@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const crypto_1 = require("crypto");
+const randomstring_1 = require("randomstring");
 const bcrypt_1 = require("bcrypt");
 const typedi_1 = require("typedi");
 const typeorm_1 = require("typeorm");
@@ -29,13 +29,12 @@ let ResetPasswordService = class ResetPasswordService {
         if (!validUser) {
             throw new Error('this email does not belongs to any of our users');
         }
-        const randomTextToNewPassword = crypto_1.randomBytes(8);
-        const randomTextToNewPasswordString = randomTextToNewPassword.toString();
-        const hashedRandomTextToNewPassword = await bcrypt_1.hash(randomTextToNewPasswordString, 8);
+        const randomTextToNewPassword = randomstring_1.generate({ length: 6, charset: 'hex' });
+        const hashedRandomTextToNewPassword = await bcrypt_1.hash(randomTextToNewPassword, 8);
         const validUserNewPassword = hashedRandomTextToNewPassword;
         validUser.password = validUserNewPassword;
         await this.usersRepository.save(validUser);
-        return randomTextToNewPasswordString;
+        return randomTextToNewPassword;
     }
 };
 ResetPasswordService = __decorate([

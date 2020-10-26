@@ -1,4 +1,4 @@
-import { randomBytes } from 'crypto';
+import { generate } from 'randomstring';
 import { hash } from 'bcrypt';
 import { Service } from 'typedi';
 import { Connection } from 'typeorm';
@@ -27,12 +27,10 @@ class ResetPasswordService {
             throw new Error('this email does not belongs to any of our users');
         }
 
-        const randomTextToNewPassword = randomBytes(8);
-
-        const randomTextToNewPasswordString = randomTextToNewPassword.toString();
+        const randomTextToNewPassword = generate({ length: 6, charset: 'hex' });
 
         const hashedRandomTextToNewPassword = await hash(
-            randomTextToNewPasswordString,
+            randomTextToNewPassword,
             8,
         );
 
@@ -42,7 +40,7 @@ class ResetPasswordService {
 
         await this.usersRepository.save(validUser);
 
-        return randomTextToNewPasswordString;
+        return randomTextToNewPassword;
     }
 }
 
