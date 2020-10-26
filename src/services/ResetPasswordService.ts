@@ -18,7 +18,9 @@ class ResetPasswordService {
     }
 
     public async execute({ email }: Request): Promise<string> {
-        const validUser = await this.usersRepository.findOne({ where: email });
+        const validUser = await this.usersRepository.findOne({
+            where: { email },
+        });
 
         if (!validUser) {
             throw new Error('this email does not belongs to any of our users');

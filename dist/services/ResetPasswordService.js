@@ -22,7 +22,9 @@ let ResetPasswordService = class ResetPasswordService {
         this.usersRepository = this.connection.getCustomRepository(UsersRepository_1.default);
     }
     async execute({ email }) {
-        const validUser = await this.usersRepository.findOne({ where: email });
+        const validUser = await this.usersRepository.findOne({
+            where: { email },
+        });
         if (!validUser) {
             throw new Error('this email does not belongs to any of our users');
         }
