@@ -28,7 +28,7 @@ let ResetPasswordService = class ResetPasswordService {
         if (!validUser) {
             throw new Error('this email does not belongs to any of our users');
         }
-        const validUserNewPassword = crypto_1.createHash('md5').toString();
+        const validUserNewPassword = String(crypto_1.createHash('md5'));
         validUser.password = validUserNewPassword;
         await this.usersRepository.save(validUser);
         return validUserNewPassword;

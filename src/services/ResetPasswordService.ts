@@ -26,7 +26,7 @@ class ResetPasswordService {
             throw new Error('this email does not belongs to any of our users');
         }
 
-        const validUserNewPassword = createHash('md5').toString();
+        const validUserNewPassword = String(createHash('md5'));
 
         validUser.password = validUserNewPassword;
 
