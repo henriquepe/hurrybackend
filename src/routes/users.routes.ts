@@ -13,18 +13,29 @@ const usersRouter = Router();
 const upload = multer(uploadConfig);
 
 usersRouter.post('/', async (request, response) => {
-    const { name, email, password, avatar } = request.body;
+    try {
+        const { name, email, password, avatar } = request.body;
 
-    const createUserService = new CreateUserService(await connection);
+        const createUserService = new CreateUserService(await connection);
 
-    const user = await createUserService.execute({
-        name,
-        email,
-        password,
-        avatar,
-    });
+        const user = await createUserService.execute({
+            name,
+            email,
+            password,
+            avatar,
+        });
 
-    return response.json(user);
+        return response.json(user);
+    } catch (err) {
+        if (!err) {
+            return response.status(400).json({
+                error:
+                    'Something went wrong, we could not create your account right now, try again later',
+            });
+        }
+
+        return response.status(400).json({ error: err.message });
+    }
 });
 
 usersRouter.patch(
@@ -50,20 +61,26 @@ usersRouter.patch(
 );
 
 usersRouter.post('/resetPassword', async (request, response) => {
-    const { email } = request.body;
+    try {
+        const { email } = request.body;
 
-    const resetPasswordService = new ResetPasswordService(await connection);
+        const resetPasswordService = new ResetPasswordService(await connection);
 
-    const newPassword = await resetPasswordService.execute({ email });
+        const newPassword = await resetPasswordService.execute({ email });
 
-    const sendNewPasswordByEmailService = new SendNewPasswordByEmailService();
+        const sendNewPasswordByEmailService = new SendNewPasswordByEmailService();
 
-    await sendNewPasswordByEmailService.execute({
-        email,
-        password: newPassword,
-    });
+        await sendNewPasswordByEmailService.execute({
+            email,
+            password: newPassword,
+        });
 
-    return response.json({ password: newPassword });
+        return response.json({
+            message: 'A new password was sended to your email',
+        });
+    } catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
 });
 
 export default usersRouter;

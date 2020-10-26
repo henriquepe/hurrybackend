@@ -15,15 +15,25 @@ const SendNewPasswordByEmailService_1 = __importDefault(require("../services/Sen
 const usersRouter = express_1.Router();
 const upload = multer_1.default(upload_1.default);
 usersRouter.post('/', async (request, response) => {
-    const { name, email, password, avatar } = request.body;
-    const createUserService = new CreateUserService_1.default(await database_1.default);
-    const user = await createUserService.execute({
-        name,
-        email,
-        password,
-        avatar,
-    });
-    return response.json(user);
+    try {
+        const { name, email, password, avatar } = request.body;
+        const createUserService = new CreateUserService_1.default(await database_1.default);
+        const user = await createUserService.execute({
+            name,
+            email,
+            password,
+            avatar,
+        });
+        return response.json(user);
+    }
+    catch (err) {
+        if (!err) {
+            return response.status(400).json({
+                error: 'Something went wrong, we could not create your account right now, try again later',
+            });
+        }
+        return response.status(400).json({ error: err.message });
+    }
 });
 usersRouter.patch('/avatar', EnsureAuthenticated_1.default, upload.single('avatar'), async (request, response) => {
     try {
@@ -40,14 +50,21 @@ usersRouter.patch('/avatar', EnsureAuthenticated_1.default, upload.single('avata
     }
 });
 usersRouter.post('/resetPassword', async (request, response) => {
-    const { email } = request.body;
-    const resetPasswordService = new ResetPasswordService_1.default(await database_1.default);
-    const newPassword = await resetPasswordService.execute({ email });
-    const sendNewPasswordByEmailService = new SendNewPasswordByEmailService_1.default();
-    await sendNewPasswordByEmailService.execute({
-        email,
-        password: newPassword,
-    });
-    return response.json({ password: newPassword });
+    try {
+        const { email } = request.body;
+        const resetPasswordService = new ResetPasswordService_1.default(await database_1.default);
+        const newPassword = await resetPasswordService.execute({ email });
+        const sendNewPasswordByEmailService = new SendNewPasswordByEmailService_1.default();
+        await sendNewPasswordByEmailService.execute({
+            email,
+            password: newPassword,
+        });
+        return response.json({
+            message: 'A new password was sended to your email',
+        });
+    }
+    catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
 });
 exports.default = usersRouter;

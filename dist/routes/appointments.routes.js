@@ -10,21 +10,38 @@ const CreateAppointmentService_1 = __importDefault(require("../services/CreateAp
 const ListAppointmentsService_1 = __importDefault(require("../services/ListAppointmentsService"));
 const appointmentsRouter = express_1.Router();
 appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, response) => {
-    const { provider_id, name, date, eventImage, tickets } = request.body;
-    const createAppointmentService = new CreateAppointmentService_1.default(await database_1.default);
-    const appointment = await createAppointmentService.execute({
-        name,
-        provider_id,
-        date,
-        eventImage,
-        tickets,
-    });
-    return response.json(appointment);
+    try {
+        const { provider_id, name, date, eventImage, tickets } = request.body;
+        const createAppointmentService = new CreateAppointmentService_1.default(await database_1.default);
+        const appointment = await createAppointmentService.execute({
+            name,
+            provider_id,
+            date,
+            eventImage,
+            tickets,
+        });
+        return response.status(200).json(appointment);
+    }
+    catch {
+        return response.status(400).json({
+            error: 'Your event could not be created, try again later.',
+        });
+    }
 });
 // lembrar de incluir autenticação ensureAuthenticated
 appointmentsRouter.get('/', async (request, response) => {
-    const createListAppointmentsService = new ListAppointmentsService_1.default(await database_1.default);
-    const appointments = await createListAppointmentsService.execute();
-    return response.json(appointments);
+    try {
+        const createListAppointmentsService = new ListAppointmentsService_1.default(await database_1.default);
+        const appointments = await createListAppointmentsService.execute();
+        return response.status(200).json(appointments);
+    }
+    catch (err) {
+        if (!err) {
+            return response.status(400).json({
+                error: 'Those events could not be listed now, try again later',
+            });
+        }
+        return response.status(400).json({ error: err.message });
+    }
 });
 exports.default = appointmentsRouter;
