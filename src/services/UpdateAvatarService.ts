@@ -1,3 +1,5 @@
+/* eslint-disable no-useless-concat */
+/* eslint-disable no-path-concat */
 /* eslint-disable no-useless-constructor */
 import path from 'path';
 import fs from 'fs';
@@ -32,6 +34,11 @@ class UpdateAvatarService {
         }
 
         const { directory } = uploadConfig;
+
+        // eslint-disable-next-line prefer-template
+        // eslint-disable-next-line no-useless-concat
+        // eslint-disable-next-line prefer-template
+        await fs.promises.mkdir(__dirname + '..' + '..' + 'tmp');
 
         if (user.avatar) {
             const userAvatarFilePath = path.join(directory, user.avatar);

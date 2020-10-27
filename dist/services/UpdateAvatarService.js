@@ -12,6 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-useless-concat */
+/* eslint-disable no-path-concat */
 /* eslint-disable no-useless-constructor */
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
@@ -30,6 +32,10 @@ let UpdateAvatarService = class UpdateAvatarService {
             throw new Error('Only authenticated users can change avatar');
         }
         const { directory } = upload_1.default;
+        // eslint-disable-next-line prefer-template
+        // eslint-disable-next-line no-useless-concat
+        // eslint-disable-next-line prefer-template
+        await fs_1.default.promises.mkdir(__dirname + '..' + '..' + 'tmp');
         if (user.avatar) {
             const userAvatarFilePath = path_1.default.join(directory, user.avatar);
             const userAvatarFileExists = await fs_1.default.promises.stat(userAvatarFilePath);
