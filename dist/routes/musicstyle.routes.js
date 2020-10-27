@@ -11,7 +11,7 @@ musicstyleRouter.post('/', async (request, response) => {
     try {
         const { name } = request.body;
         const createMusicStyleService = new CreateMusicStyleService_1.default(await database_1.default);
-        const musicStyle = createMusicStyleService.execute({ name });
+        const musicStyle = await createMusicStyleService.execute({ name });
         return response.status(200).json({ musicStyle });
     }
     catch (err) {

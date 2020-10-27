@@ -12,7 +12,7 @@ musicstyleRouter.post('/', async (request, response) => {
             await connection,
         );
 
-        const musicStyle = createMusicStyleService.execute({ name });
+        const musicStyle = await createMusicStyleService.execute({ name });
 
         return response.status(200).json({ musicStyle });
     } catch (err) {
