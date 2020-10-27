@@ -1,5 +1,4 @@
 "use strict";
-/* eslint-disable no-useless-constructor */
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -13,29 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const typedi_1 = require("typedi");
 const typeorm_1 = require("typeorm");
-const AppointmentsRepository_1 = __importDefault(require("../repositories/AppointmentsRepository"));
-let CreateAppointmentService = class CreateAppointmentService {
+const typedi_1 = require("typedi");
+const MusicStylesRepository_1 = __importDefault(require("../repositories/MusicStylesRepository"));
+let CreateMusicStyleService = class CreateMusicStyleService {
     constructor(connection) {
         this.connection = connection;
-        this.appointmentsRepository = this.connection.getCustomRepository(AppointmentsRepository_1.default);
+        this.musicstylesRepository = this.connection.getCustomRepository(MusicStylesRepository_1.default);
     }
-    async execute({ name, date, provider_id, tickets, eventImage, musicstyle_id, }) {
-        const appointment = await this.appointmentsRepository.create({
-            name,
-            date,
-            provider_id,
-            tickets,
-            eventImage,
-            musicstyle_id,
+    async execute({ name }) {
+        const nameToLowerCase = name.toLowerCase();
+        const verifyAlreadyExistanceOfMusicStyle = await this.musicstylesRepository.findOne({ where: { nameToLowerCase } });
+        if (verifyAlreadyExistanceOfMusicStyle) {
+            throw new Error('This music style already exists');
+        }
+        const musicStyle = await this.musicstylesRepository.create({
+            name: nameToLowerCase,
         });
-        await this.appointmentsRepository.save(appointment);
-        return appointment;
+        await this.musicstylesRepository.save(musicStyle);
+        return musicStyle;
     }
 };
-CreateAppointmentService = __decorate([
+CreateMusicStyleService = __decorate([
     typedi_1.Service(),
     __metadata("design:paramtypes", [typeorm_1.Connection])
-], CreateAppointmentService);
-exports.default = CreateAppointmentService;
+], CreateMusicStyleService);
+exports.default = CreateMusicStyleService;

@@ -1,8 +1,7 @@
 /* eslint-disable no-useless-constructor */
 
-import { InjectRepository } from 'typeorm-typedi-extensions';
 import { Service } from 'typedi';
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
 import Appointment from '../models/Appointment.entity';
 import AppointmentsRepository from '../repositories/AppointmentsRepository';
 
@@ -12,6 +11,7 @@ interface Request {
     date: Date;
     eventImage: string;
     tickets: number;
+    musicstyle_id: string;
 }
 
 @Service()
@@ -30,13 +30,15 @@ export default class CreateAppointmentService {
         provider_id,
         tickets,
         eventImage,
+        musicstyle_id,
     }: Request): Promise<Appointment> {
-        const appointment = this.appointmentsRepository.create({
+        const appointment = await this.appointmentsRepository.create({
             name,
             date,
             provider_id,
             tickets,
             eventImage,
+            musicstyle_id,
         });
 
         await this.appointmentsRepository.save(appointment);

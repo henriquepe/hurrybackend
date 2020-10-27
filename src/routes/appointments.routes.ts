@@ -8,7 +8,14 @@ const appointmentsRouter = Router();
 
 appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
     try {
-        const { provider_id, name, date, eventImage, tickets } = request.body;
+        const {
+            provider_id,
+            name,
+            date,
+            eventImage,
+            tickets,
+            musicstyle_id,
+        } = request.body;
 
         const createAppointmentService = new CreateAppointmentService(
             await connection,
@@ -20,6 +27,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
             date,
             eventImage,
             tickets,
+            musicstyle_id,
         });
 
         return response.status(200).json(appointment);
