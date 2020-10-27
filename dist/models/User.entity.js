@@ -8,8 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const MusicStyle_entity_1 = __importDefault(require("./MusicStyle.entity"));
 let User = class User {
 };
 __decorate([
@@ -24,6 +28,33 @@ __decorate([
     typeorm_1.Column('varchar'),
     __metadata("design:type", String)
 ], User.prototype, "email", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], User.prototype, "musicInterest1_id", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => MusicStyle_entity_1.default),
+    typeorm_1.JoinColumn({ name: 'musicInterest1_id' }),
+    __metadata("design:type", String)
+], User.prototype, "musicinterest1", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], User.prototype, "musicInterest2_id", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => MusicStyle_entity_1.default),
+    typeorm_1.JoinColumn({ name: 'musicInterest2_id' }),
+    __metadata("design:type", String)
+], User.prototype, "musicinterest2", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], User.prototype, "musicInterest3_id", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => MusicStyle_entity_1.default),
+    typeorm_1.JoinColumn({ name: 'musicInterest3_id' }),
+    __metadata("design:type", String)
+], User.prototype, "musicinterest3", void 0);
 __decorate([
     typeorm_1.Column('varchar'),
     __metadata("design:type", String)
