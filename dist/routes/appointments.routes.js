@@ -23,9 +23,9 @@ appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, resp
         });
         return response.status(200).json(appointment);
     }
-    catch {
+    catch (err) {
         return response.status(400).json({
-            error: 'Your event could not be created, try again later.',
+            error: err.message,
         });
     }
 });
