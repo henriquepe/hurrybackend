@@ -38,7 +38,7 @@ class UpdateAvatarService {
         // eslint-disable-next-line prefer-template
         // eslint-disable-next-line no-useless-concat
         // eslint-disable-next-line prefer-template
-        await fs.promises.mkdir(__dirname + '..' + '..' + 'tmp');
+        // await fs.promises.mkdir(__dirname + '..' + '..' + 'tmp');
 
         if (user.avatar) {
             const userAvatarFilePath = path.join(directory, user.avatar);
