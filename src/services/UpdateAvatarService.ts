@@ -33,17 +33,17 @@ class UpdateAvatarService {
 
         const { directory } = uploadConfig;
 
-        // if (user.avatar) {
-        //     const userAvatarFilePath = path.join(directory, user.avatar);
+        if (user.avatar) {
+            const userAvatarFilePath = path.join(directory, user.avatar);
 
-        //     const userAvatarFileExists = await fs.promises.stat(
-        //         userAvatarFilePath,
-        //     );
+            const userAvatarFileExists = await fs.promises.stat(
+                userAvatarFilePath,
+            );
 
-        //     if (userAvatarFileExists) {
-        //         await fs.promises.unlink(userAvatarFilePath);
-        //     }
-        // }
+            if (userAvatarFileExists) {
+                await fs.promises.unlink(userAvatarFilePath);
+            }
+        }
 
         user.avatar = avatarFilename;
 
