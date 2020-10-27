@@ -3,9 +3,9 @@
 /* eslint-disable no-useless-constructor */
 import path from 'path';
 import fs from 'fs';
-import { InjectRepository } from 'typeorm-typedi-extensions';
+
 import { Service } from 'typedi';
-import { Connection, Repository } from 'typeorm';
+import { Connection } from 'typeorm';
 import User from '../models/User.entity';
 
 import uploadConfig from '../config/upload';

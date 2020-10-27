@@ -1,6 +1,7 @@
 /* eslint-disable no-return-await */
 import { createConnection, useContainer } from 'typeorm';
 import { Container } from 'typedi';
+import { Client } from 'pg';
 
 // import Appointment from '../models/Appointment.entity';
 // import User from '../models/User.entity';
@@ -33,3 +34,5 @@ export default connection;
 //         "entitiesDir": "./src/models"
 //     }
 // }
+
+//
