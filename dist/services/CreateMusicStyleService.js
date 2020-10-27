@@ -22,7 +22,7 @@ let CreateMusicStyleService = class CreateMusicStyleService {
     }
     async execute({ name }) {
         const nameToLowerCase = name.toLowerCase();
-        const verifyAlreadyExistanceOfMusicStyle = await this.musicstylesRepository.findOne({ where: { nameToLowerCase } });
+        const verifyAlreadyExistanceOfMusicStyle = await this.musicstylesRepository.findOne({ where: { name: nameToLowerCase } });
         if (verifyAlreadyExistanceOfMusicStyle) {
             throw new Error('This music style already exists');
         }

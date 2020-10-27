@@ -21,7 +21,7 @@ class CreateMusicStyleService {
         const nameToLowerCase = name.toLowerCase();
 
         const verifyAlreadyExistanceOfMusicStyle = await this.musicstylesRepository.findOne(
-            { where: { nameToLowerCase } },
+            { where: { name: nameToLowerCase } },
         );
 
         if (verifyAlreadyExistanceOfMusicStyle) {
