@@ -8,6 +8,7 @@ import UpdateAvatarService from '../services/UpdateAvatarService';
 import connection from '../database';
 import ResetPasswordService from '../services/ResetPasswordService';
 import SendNewPasswordByEmailService from '../services/SendNewPasswordByEmailService';
+import UpdateUserPasswordService from '../services/UpdateUserPasswordService';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -93,5 +94,31 @@ usersRouter.post('/resetPassword', async (request, response) => {
         return response.status(400).json({ error: err.message });
     }
 });
+
+usersRouter.post(
+    '/password',
+    ensureAuthenticated,
+    async (request, response) => {
+        try {
+            const { oldPassword, newPassword } = request.body;
+
+            const { id } = request.user;
+
+            const updateUserPasswordService = new UpdateUserPasswordService(
+                await connection,
+            );
+
+            await updateUserPasswordService.execute({
+                user_id: id,
+                oldPassword,
+                newPassword,
+            });
+
+            return response.status(200).json({ message: 'password changed' });
+        } catch (err) {
+            return response.status(400).json({ error: err.message });
+        }
+    },
+);
 
 export default usersRouter;

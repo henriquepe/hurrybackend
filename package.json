@@ -6,6 +6,7 @@
     "license": "MIT",
     "scripts": {
         "start": "node ./dist/server.js",
+        "dev:start": "nodemon ./dist/server.js",
         "watch-node": "nodemon ./dist/server.js",
         "startWithTs": "ts-node-dev --transpile-only --ignore-watch node_modules ./src/server.ts",
         "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
@@ -38,6 +39,7 @@
         "multer": "^1.4.2",
         "nodemailer": "^6.4.14",
         "nodemailer-express-handlebars": "^4.0.0",
+        "nodemon": "^2.0.6",
         "pg": "^8.4.1",
         "pg-connection-string": "^2.4.0",
         "randomstring": "^1.1.5",

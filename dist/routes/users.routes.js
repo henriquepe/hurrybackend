@@ -12,6 +12,7 @@ const UpdateAvatarService_1 = __importDefault(require("../services/UpdateAvatarS
 const database_1 = __importDefault(require("../database"));
 const ResetPasswordService_1 = __importDefault(require("../services/ResetPasswordService"));
 const SendNewPasswordByEmailService_1 = __importDefault(require("../services/SendNewPasswordByEmailService"));
+const UpdateUserPasswordService_1 = __importDefault(require("../services/UpdateUserPasswordService"));
 const usersRouter = express_1.Router();
 const upload = multer_1.default(upload_1.default);
 usersRouter.post('/', async (request, response) => {
@@ -65,6 +66,22 @@ usersRouter.post('/resetPassword', async (request, response) => {
         return response.json({
             message: 'A new password was sended to your email',
         });
+    }
+    catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
+usersRouter.post('/password', EnsureAuthenticated_1.default, async (request, response) => {
+    try {
+        const { oldPassword, newPassword } = request.body;
+        const { id } = request.user;
+        const updateUserPasswordService = new UpdateUserPasswordService_1.default(await database_1.default);
+        await updateUserPasswordService.execute({
+            user_id: id,
+            oldPassword,
+            newPassword,
+        });
+        return response.status(200).json({ message: 'password changed' });
     }
     catch (err) {
         return response.status(400).json({ error: err.message });
