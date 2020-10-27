@@ -12,17 +12,15 @@ function ensureAuthenticated(request, response, next) {
         throw new Error('JWT token is missing');
     }
     const [, token] = authHeader.split(' ');
-    try {
-        const { secret } = auth_1.default.jwt;
-        const decodedToken = jsonwebtoken_1.verify(token, secret);
-        const { sub } = decodedToken;
-        request.user = {
-            id: sub,
-        };
-        return next();
-    }
-    catch (err) {
+    const { secret } = auth_1.default.jwt;
+    const decodedToken = jsonwebtoken_1.verify(token, secret);
+    if (!decodedToken) {
         throw new Error('Invalid JWT Token ');
     }
+    const { sub } = decodedToken;
+    request.user = {
+        id: sub,
+    };
+    return next();
 }
 exports.default = ensureAuthenticated;

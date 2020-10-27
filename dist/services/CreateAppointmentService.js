@@ -30,7 +30,7 @@ let CreateAppointmentService = class CreateAppointmentService {
             musicstyle_id === '') {
             throw new Error('Not suficient information to create an account, please fill all require information');
         }
-        const appointment = await this.appointmentsRepository.create({
+        const appointment = this.appointmentsRepository.create({
             name,
             date,
             provider_id,

@@ -45,7 +45,7 @@ export default class CreateAppointmentService {
             );
         }
 
-        const appointment = await this.appointmentsRepository.create({
+        const appointment = this.appointmentsRepository.create({
             name,
             date,
             provider_id,
