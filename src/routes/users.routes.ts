@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 
+import { getCustomRepository, getRepository } from 'typeorm';
 import uploadConfig from '../config/upload';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import CreateUserService from '../services/CreateUserService';
