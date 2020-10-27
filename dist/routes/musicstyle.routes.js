@@ -22,7 +22,7 @@ musicstyleRouter.post('/', async (request, response) => {
 musicstyleRouter.get('/', async (request, response) => {
     try {
         const listMusicStylesService = new ListMusicStylesService_1.default(await database_1.default);
-        const listOfMusicStyles = listMusicStylesService.execute();
+        const listOfMusicStyles = await listMusicStylesService.execute();
         return response.status(200).json({ listOfMusicStyles });
     }
     catch {

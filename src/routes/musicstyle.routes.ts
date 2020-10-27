@@ -27,7 +27,7 @@ musicstyleRouter.get('/', async (request, response) => {
             await connection,
         );
 
-        const listOfMusicStyles = listMusicStylesService.execute();
+        const listOfMusicStyles = await listMusicStylesService.execute();
 
         return response.status(200).json({ listOfMusicStyles });
     } catch {
