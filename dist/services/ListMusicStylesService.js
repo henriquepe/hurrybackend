@@ -12,39 +12,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-useless-constructor */
-const bcrypt_1 = require("bcrypt");
-const typedi_1 = require("typedi");
 const typeorm_1 = require("typeorm");
-const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
-let CreateUserService = class CreateUserService {
+const typedi_1 = require("typedi");
+const MusicStylesRepository_1 = __importDefault(require("../repositories/MusicStylesRepository"));
+let ListMusicStyleService = class ListMusicStyleService {
     constructor(connection) {
         this.connection = connection;
-        this.usersRepository = this.connection.getCustomRepository(UsersRepository_1.default);
+        this.musicstylesRepository = this.connection.getCustomRepository(MusicStylesRepository_1.default);
     }
-    async execute({ name, email, password, avatar, musicInterest1_id, musicInterest2_id, musicInterest3_id, }) {
-        const checkIfUserAlreadyExists = await this.usersRepository.findOne({
-            where: { email },
-        });
-        if (checkIfUserAlreadyExists) {
-            throw new Error('User already exists');
-        }
-        const hashedPassword = await bcrypt_1.hash(password, 8);
-        const user = this.usersRepository.create({
-            name,
-            email,
-            password: hashedPassword,
-            avatar,
-            musicInterest1_id,
-            musicInterest2_id,
-            musicInterest3_id,
-        });
-        await this.usersRepository.save(user);
-        return user;
+    async execute() {
+        const musicStylesList = await this.musicstylesRepository.find();
+        return musicStylesList;
     }
 };
-CreateUserService = __decorate([
+ListMusicStyleService = __decorate([
     typedi_1.Service(),
     __metadata("design:paramtypes", [typeorm_1.Connection])
-], CreateUserService);
-exports.default = CreateUserService;
+], ListMusicStyleService);
+exports.default = ListMusicStyleService;

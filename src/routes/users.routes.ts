@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import { getCustomRepository, getRepository } from 'typeorm';
 import uploadConfig from '../config/upload';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import CreateUserService from '../services/CreateUserService';
@@ -15,7 +14,15 @@ const upload = multer(uploadConfig);
 
 usersRouter.post('/', async (request, response) => {
     try {
-        const { name, email, password, avatar } = request.body;
+        const {
+            name,
+            email,
+            password,
+            avatar,
+            musicinterest1_id,
+            musicinterest2_id,
+            musicinterest3_id,
+        } = request.body;
 
         const createUserService = new CreateUserService(await connection);
 
@@ -24,6 +31,9 @@ usersRouter.post('/', async (request, response) => {
             email,
             password,
             avatar,
+            musicInterest1_id: musicinterest1_id,
+            musicInterest2_id: musicinterest2_id,
+            musicInterest3_id: musicinterest3_id,
         });
 
         return response.json(user);

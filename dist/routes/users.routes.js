@@ -16,13 +16,16 @@ const usersRouter = express_1.Router();
 const upload = multer_1.default(upload_1.default);
 usersRouter.post('/', async (request, response) => {
     try {
-        const { name, email, password, avatar } = request.body;
+        const { name, email, password, avatar, musicinterest1_id, musicinterest2_id, musicinterest3_id, } = request.body;
         const createUserService = new CreateUserService_1.default(await database_1.default);
         const user = await createUserService.execute({
             name,
             email,
             password,
             avatar,
+            musicInterest1_id: musicinterest1_id,
+            musicInterest2_id: musicinterest2_id,
+            musicInterest3_id: musicinterest3_id,
         });
         return response.json(user);
     }
