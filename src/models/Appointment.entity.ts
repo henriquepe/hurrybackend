@@ -7,20 +7,9 @@ import {
     ManyToOne,
     JoinColumn,
 } from 'typeorm';
+import MusicStyle from './MusicStyle.entity';
 
 import User from './User.entity';
-
-// interface AppointmentDTO {
-//     name: string;
-
-//     provider: string;
-
-//     date: Date;
-
-//     image: string;
-
-//     tickets: number;
-// }
 
 @Entity('appointments')
 class Appointment {
@@ -36,6 +25,13 @@ class Appointment {
     @ManyToOne(() => User)
     @JoinColumn({ name: 'provider_id' })
     provider: string;
+
+    @Column('varchar')
+    musicstyle_id: string;
+
+    @ManyToOne(() => MusicStyle)
+    @JoinColumn({ name: 'musicstyle_id' })
+    musicstyle: string;
 
     @Column('timestamp with time zone')
     date: Date;
