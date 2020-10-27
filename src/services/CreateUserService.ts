@@ -35,6 +35,20 @@ export default class CreateUserService {
         musicInterest2_id,
         musicInterest3_id,
     }: Request): Promise<User> {
+        if (
+            name === '' ||
+            email === '' ||
+            password === '' ||
+            avatar === '' ||
+            musicInterest1_id === '' ||
+            musicInterest2_id === '' ||
+            musicInterest3_id === ''
+        ) {
+            throw new Error(
+                'Not suficient information to create an account, please fill all require information',
+            );
+        }
+
         const checkIfUserAlreadyExists = await this.usersRepository.findOne({
             where: { email },
         });

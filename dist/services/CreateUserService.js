@@ -23,6 +23,15 @@ let CreateUserService = class CreateUserService {
         this.usersRepository = this.connection.getCustomRepository(UsersRepository_1.default);
     }
     async execute({ name, email, password, avatar, musicInterest1_id, musicInterest2_id, musicInterest3_id, }) {
+        if (name === '' ||
+            email === '' ||
+            password === '' ||
+            avatar === '' ||
+            musicInterest1_id === '' ||
+            musicInterest2_id === '' ||
+            musicInterest3_id === '') {
+            throw new Error('Not suficient information to create an account, please fill all require information');
+        }
         const checkIfUserAlreadyExists = await this.usersRepository.findOne({
             where: { email },
         });

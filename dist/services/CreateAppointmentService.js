@@ -22,6 +22,14 @@ let CreateAppointmentService = class CreateAppointmentService {
         this.appointmentsRepository = this.connection.getCustomRepository(AppointmentsRepository_1.default);
     }
     async execute({ name, date, provider_id, tickets, eventImage, musicstyle_id, }) {
+        if (name === '' ||
+            date === null ||
+            provider_id === '' ||
+            tickets === null ||
+            eventImage === '' ||
+            musicstyle_id === '') {
+            throw new Error('Not suficient information to create an account, please fill all require information');
+        }
         const appointment = await this.appointmentsRepository.create({
             name,
             date,
