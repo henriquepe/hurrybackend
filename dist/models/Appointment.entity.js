@@ -66,6 +66,18 @@ __decorate([
     __metadata("design:type", Number)
 ], Appointment.prototype, "tickets", void 0);
 __decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], Appointment.prototype, "state", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], Appointment.prototype, "city", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], Appointment.prototype, "street", void 0);
+__decorate([
     typeorm_1.CreateDateColumn(),
     __metadata("design:type", Number)
 ], Appointment.prototype, "created_at", void 0);

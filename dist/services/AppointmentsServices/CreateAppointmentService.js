@@ -21,16 +21,22 @@ let CreateAppointmentService = class CreateAppointmentService {
         this.connection = connection;
         this.appointmentsRepository = this.connection.getCustomRepository(AppointmentsRepository_1.default);
     }
-    async execute({ name, date, provider_id, tickets, eventImage, musicstyle_id, eventtype_id, }) {
+    async execute({ name, date, provider_id, tickets, eventImage, musicstyle_id, eventtype_id, state, city, street, }) {
         if (name === '' ||
             date === null ||
             provider_id === '' ||
             tickets === null ||
             eventImage === '' ||
             musicstyle_id === '' ||
-            eventtype_id === '') {
+            eventtype_id === '' ||
+            state === '' ||
+            city === '' ||
+            street === '') {
             throw new Error('Not suficient information to create an account, please fill all require information');
         }
+        const stateToLowerCase = state.toLowerCase();
+        const cityToLowerCase = city.toLowerCase();
+        const streetToLowerCase = street.toLowerCase();
         const appointment = this.appointmentsRepository.create({
             name,
             date,
@@ -39,6 +45,9 @@ let CreateAppointmentService = class CreateAppointmentService {
             eventImage,
             musicstyle_id,
             eventtype_id,
+            state: stateToLowerCase,
+            city: cityToLowerCase,
+            street: streetToLowerCase,
         });
         await this.appointmentsRepository.save(appointment);
         return appointment;

@@ -13,6 +13,9 @@ interface Request {
     tickets: number;
     musicstyle_id: string;
     eventtype_id: string;
+    state: string;
+    city: string;
+    street: string;
 }
 
 @Service()
@@ -33,6 +36,9 @@ export default class CreateAppointmentService {
         eventImage,
         musicstyle_id,
         eventtype_id,
+        state,
+        city,
+        street,
     }: Request): Promise<Appointment> {
         if (
             name === '' ||
@@ -41,12 +47,21 @@ export default class CreateAppointmentService {
             tickets === null ||
             eventImage === '' ||
             musicstyle_id === '' ||
-            eventtype_id === ''
+            eventtype_id === '' ||
+            state === '' ||
+            city === '' ||
+            street === ''
         ) {
             throw new Error(
                 'Not suficient information to create an account, please fill all require information',
             );
         }
+
+        const stateToLowerCase = state.toLowerCase();
+
+        const cityToLowerCase = city.toLowerCase();
+
+        const streetToLowerCase = street.toLowerCase();
 
         const appointment = this.appointmentsRepository.create({
             name,
@@ -56,6 +71,9 @@ export default class CreateAppointmentService {
             eventImage,
             musicstyle_id,
             eventtype_id,
+            state: stateToLowerCase,
+            city: cityToLowerCase,
+            street: streetToLowerCase,
         });
 
         await this.appointmentsRepository.save(appointment);

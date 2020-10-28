@@ -61,6 +61,7 @@ let CreateUserService = class CreateUserService {
             cellphone,
         });
         await this.usersRepository.save(user);
+        delete user.password;
         return user;
     }
 };

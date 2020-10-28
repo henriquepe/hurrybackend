@@ -45,6 +45,7 @@ let UpdateAvatarService = class UpdateAvatarService {
         }
         user.avatar = avatarFilename;
         await this.usersRepository.save(user);
+        delete user.password;
         return user;
     }
 };

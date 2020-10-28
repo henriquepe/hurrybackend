@@ -37,6 +37,7 @@ let UpdateProfileService = class UpdateProfileService {
         user.cpf = cpf;
         user.cellphone = cellphone;
         await this.usersRepository.save(user);
+        delete user.password;
         return user;
     }
 };

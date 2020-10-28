@@ -50,6 +50,15 @@ class Appointment {
     @Column('numeric')
     tickets: number;
 
+    @Column('varchar')
+    state: string;
+
+    @Column('varchar')
+    city: string;
+
+    @Column('varchar')
+    street: string;
+
     @CreateDateColumn()
     created_at: number;
 
