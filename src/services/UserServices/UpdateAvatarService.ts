@@ -40,17 +40,17 @@ class UpdateAvatarService {
         // eslint-disable-next-line prefer-template
         // await fs.promises.mkdir(__dirname + '..' + '..' + 'tmp');
 
-        if (user.avatar) {
-            const userAvatarFilePath = path.join(directory, user.avatar);
+        // if (user.avatar) {
+        //     const userAvatarFilePath = path.join(directory, user.avatar);
 
-            const userAvatarFileExists = await fs.promises.stat(
-                userAvatarFilePath,
-            );
+        //     const userAvatarFileExists = await fs.promises.stat(
+        //         userAvatarFilePath,
+        //     );
 
-            if (userAvatarFileExists) {
-                await fs.promises.unlink(userAvatarFilePath);
-            }
-        }
+        //     if (userAvatarFileExists) {
+        //         await fs.promises.unlink(userAvatarFilePath);
+        //     }
+        // }
 
         user.avatar = avatarFilename;
 

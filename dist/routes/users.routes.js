@@ -97,11 +97,16 @@ usersRouter.post('/updatePassword', EnsureAuthenticated_1.default, async (reques
     }
 });
 usersRouter.get('/:id', async (request, response) => {
-    const { id } = request.params;
-    const usersRepository = typeorm_1.getCustomRepository(UsersRepository_1.default);
-    const user = await usersRepository.findOne(id);
-    delete user.password;
-    return response.status(200).json({ user });
+    try {
+        const { id } = request.params;
+        const usersRepository = typeorm_1.getCustomRepository(UsersRepository_1.default);
+        const user = await usersRepository.findOne(id);
+        delete user.password;
+        return response.status(200).json({ user });
+    }
+    catch (err) {
+        return response.status(400).json({ err: err.message });
+    }
 });
 usersRouter.patch('/updateUserProfile', EnsureAuthenticated_1.default, async (request, response) => {
     try {
@@ -124,6 +129,20 @@ usersRouter.patch('/updateUserProfile', EnsureAuthenticated_1.default, async (re
         });
         delete user.password;
         return response.status(200).json({ user });
+    }
+    catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
+usersRouter.get('/', async (request, response) => {
+    try {
+        const usersRepository = typeorm_1.getCustomRepository(UsersRepository_1.default);
+        const listOfUsers = await usersRepository.find();
+        const secureListOfUsers = listOfUsers.map(user => {
+            delete user.password;
+            return user;
+        });
+        return response.status(200).json(secureListOfUsers);
     }
     catch (err) {
         return response.status(400).json({ error: err.message });

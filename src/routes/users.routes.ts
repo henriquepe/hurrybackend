@@ -137,15 +137,19 @@ usersRouter.post(
 );
 
 usersRouter.get('/:id', async (request, response) => {
-    const { id } = request.params;
+    try {
+        const { id } = request.params;
 
-    const usersRepository = getCustomRepository(UsersRepository);
+        const usersRepository = getCustomRepository(UsersRepository);
 
-    const user = await usersRepository.findOne(id);
+        const user = await usersRepository.findOne(id);
 
-    delete user.password;
+        delete user.password;
 
-    return response.status(200).json({ user });
+        return response.status(200).json({ user });
+    } catch (err) {
+        return response.status(400).json({ err: err.message });
+    }
 });
 
 usersRouter.patch(
@@ -196,5 +200,22 @@ usersRouter.patch(
         }
     },
 );
+
+usersRouter.get('/', async (request, response) => {
+    try {
+        const usersRepository = getCustomRepository(UsersRepository);
+
+        const listOfUsers = await usersRepository.find();
+
+        const secureListOfUsers = listOfUsers.map(user => {
+            delete user.password;
+            return user;
+        });
+
+        return response.status(200).json(secureListOfUsers);
+    } catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
 
 export default usersRouter;
