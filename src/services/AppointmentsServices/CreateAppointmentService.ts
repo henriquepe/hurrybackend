@@ -2,8 +2,8 @@
 
 import { Service } from 'typedi';
 import { Connection } from 'typeorm';
-import Appointment from '../models/Appointment.entity';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import Appointment from '../../models/Appointment.entity';
+import AppointmentsRepository from '../../repositories/AppointmentsRepository';
 
 interface Request {
     name: string;
@@ -12,6 +12,7 @@ interface Request {
     eventImage: string;
     tickets: number;
     musicstyle_id: string;
+    eventtype_id: string;
 }
 
 @Service()
@@ -31,6 +32,7 @@ export default class CreateAppointmentService {
         tickets,
         eventImage,
         musicstyle_id,
+        eventtype_id,
     }: Request): Promise<Appointment> {
         if (
             name === '' ||
@@ -38,7 +40,8 @@ export default class CreateAppointmentService {
             provider_id === '' ||
             tickets === null ||
             eventImage === '' ||
-            musicstyle_id === ''
+            musicstyle_id === '' ||
+            eventtype_id === ''
         ) {
             throw new Error(
                 'Not suficient information to create an account, please fill all require information',
@@ -52,6 +55,7 @@ export default class CreateAppointmentService {
             tickets,
             eventImage,
             musicstyle_id,
+            eventtype_id,
         });
 
         await this.appointmentsRepository.save(appointment);

@@ -2,7 +2,7 @@ import { compare, hash } from 'bcrypt';
 
 import { Service } from 'typedi';
 import { Connection } from 'typeorm';
-import UsersRepository from '../repositories/UsersRepository';
+import UsersRepository from '../../repositories/UsersRepository';
 
 interface Request {
     user_id: string;

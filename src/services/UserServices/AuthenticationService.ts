@@ -4,9 +4,9 @@ import { compare } from 'bcrypt';
 import { Service } from 'typedi';
 import { sign } from 'jsonwebtoken';
 import { Connection } from 'typeorm';
-import jwt from '../config/auth';
-import User from '../models/User.entity';
-import UsersRepository from '../repositories/UsersRepository';
+import jwt from '../../config/auth';
+import User from '../../models/User.entity';
+import UsersRepository from '../../repositories/UsersRepository';
 
 interface Request {
     email: string;

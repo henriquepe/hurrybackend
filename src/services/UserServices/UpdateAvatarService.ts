@@ -6,10 +6,10 @@ import fs from 'fs';
 
 import { Service } from 'typedi';
 import { Connection } from 'typeorm';
-import User from '../models/User.entity';
+import User from '../../models/User.entity';
 
-import uploadConfig from '../config/upload';
-import UsersRepository from '../repositories/UsersRepository';
+import uploadConfig from '../../config/upload';
+import UsersRepository from '../../repositories/UsersRepository';
 
 interface Request {
     user_id: string;

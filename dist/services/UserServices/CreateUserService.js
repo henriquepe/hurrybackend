@@ -16,7 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bcrypt_1 = require("bcrypt");
 const typedi_1 = require("typedi");
 const typeorm_1 = require("typeorm");
-const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
+const UsersRepository_1 = __importDefault(require("../../repositories/UsersRepository"));
 let CreateUserService = class CreateUserService {
     constructor(connection) {
         this.connection = connection;

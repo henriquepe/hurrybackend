@@ -6,12 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const database_1 = __importDefault(require("../database"));
 const EnsureAuthenticated_1 = __importDefault(require("../middlewares/EnsureAuthenticated"));
-const CreateAppointmentService_1 = __importDefault(require("../services/CreateAppointmentService"));
-const ListAppointmentsService_1 = __importDefault(require("../services/ListAppointmentsService"));
+const CreateAppointmentService_1 = __importDefault(require("../services/AppointmentsServices/CreateAppointmentService"));
+const ListAppointmentsService_1 = __importDefault(require("../services/AppointmentsServices/ListAppointmentsService"));
 const appointmentsRouter = express_1.Router();
 appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, response) => {
     try {
-        const { provider_id, name, date, eventImage, tickets, musicstyle_id, } = request.body;
+        const { provider_id, name, date, eventImage, tickets, musicstyle_id, eventtype_id, } = request.body;
         const createAppointmentService = new CreateAppointmentService_1.default(await database_1.default);
         const appointment = await createAppointmentService.execute({
             name,
@@ -20,6 +20,7 @@ appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, resp
             eventImage,
             tickets,
             musicstyle_id,
+            eventtype_id,
         });
         return response.status(200).json(appointment);
     }

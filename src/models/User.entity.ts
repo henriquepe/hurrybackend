@@ -20,6 +20,24 @@ class User {
     @Column('varchar')
     email: string;
 
+    @Column('boolean')
+    love: boolean;
+
+    @Column('varchar')
+    state: string;
+
+    @Column('varchar')
+    city: string;
+
+    @Column('date')
+    birthday: Date;
+
+    @Column('varchar')
+    cpf: string;
+
+    @Column('varchar')
+    cellphone: string;
+
     @Column('varchar')
     musicInterest1_id: string;
 

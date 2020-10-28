@@ -2,7 +2,7 @@ import { generate } from 'randomstring';
 import { hash } from 'bcrypt';
 import { Service } from 'typedi';
 import { Connection } from 'typeorm';
-import UsersRepository from '../repositories/UsersRepository';
+import UsersRepository from '../../repositories/UsersRepository';
 
 interface Request {
     email: string;

@@ -1,6 +1,6 @@
 import { createTransport } from 'nodemailer';
 
-import mail from '../config/mail';
+import mail from '../../config/mail';
 
 interface Request {
     password: string;

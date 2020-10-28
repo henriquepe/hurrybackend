@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
+const EventType_entity_1 = __importDefault(require("./EventType.entity"));
 const MusicStyle_entity_1 = __importDefault(require("./MusicStyle.entity"));
 const User_entity_1 = __importDefault(require("./User.entity"));
 let Appointment = class Appointment {
@@ -43,6 +44,15 @@ __decorate([
     typeorm_1.JoinColumn({ name: 'musicstyle_id' }),
     __metadata("design:type", String)
 ], Appointment.prototype, "musicstyle", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], Appointment.prototype, "eventtype_id", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => EventType_entity_1.default),
+    typeorm_1.JoinColumn({ name: 'eventtype_id' }),
+    __metadata("design:type", String)
+], Appointment.prototype, "eventtype", void 0);
 __decorate([
     typeorm_1.Column('timestamp with time zone'),
     __metadata("design:type", Date)

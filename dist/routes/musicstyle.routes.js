@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const CreateMusicStyleService_1 = __importDefault(require("../services/CreateMusicStyleService"));
+const CreateMusicStyleService_1 = __importDefault(require("../services/MusicStyleServices/CreateMusicStyleService"));
 const database_1 = __importDefault(require("../database"));
-const ListMusicStylesService_1 = __importDefault(require("../services/ListMusicStylesService"));
+const ListMusicStylesService_1 = __importDefault(require("../services/MusicStyleServices/ListMusicStylesService"));
 const musicstyleRouter = express_1.Router();
 musicstyleRouter.post('/', async (request, response) => {
     try {

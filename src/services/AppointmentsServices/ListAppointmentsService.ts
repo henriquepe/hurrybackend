@@ -1,9 +1,9 @@
 /* eslint-disable no-useless-constructor */
-import { InjectRepository } from 'typeorm-typedi-extensions';
+
 import { Service } from 'typedi';
-import { Connection, Repository } from 'typeorm';
-import Appointment from '../models/Appointment.entity';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import { Connection } from 'typeorm';
+import Appointment from '../../models/Appointment.entity';
+import AppointmentsRepository from '../../repositories/AppointmentsRepository';
 
 @Service()
 export default class ListAppointmentsService {

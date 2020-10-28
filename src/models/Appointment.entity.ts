@@ -7,6 +7,7 @@ import {
     ManyToOne,
     JoinColumn,
 } from 'typeorm';
+import EventType from './EventType.entity';
 import MusicStyle from './MusicStyle.entity';
 
 import User from './User.entity';
@@ -32,6 +33,13 @@ class Appointment {
     @ManyToOne(() => MusicStyle)
     @JoinColumn({ name: 'musicstyle_id' })
     musicstyle: string;
+
+    @Column('varchar')
+    eventtype_id: string;
+
+    @ManyToOne(() => EventType)
+    @JoinColumn({ name: 'eventtype_id' })
+    eventtype: string;
 
     @Column('timestamp with time zone')
     date: Date;

@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import connection from '../database';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
-import CreateAppointmentService from '../services/CreateAppointmentService';
-import ListAppointmentsService from '../services/ListAppointmentsService';
+import CreateAppointmentService from '../services/AppointmentsServices/CreateAppointmentService';
+import ListAppointmentsService from '../services/AppointmentsServices/ListAppointmentsService';
 
 const appointmentsRouter = Router();
 
@@ -15,6 +15,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
             eventImage,
             tickets,
             musicstyle_id,
+            eventtype_id,
         } = request.body;
 
         const createAppointmentService = new CreateAppointmentService(
@@ -28,6 +29,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
             eventImage,
             tickets,
             musicstyle_id,
+            eventtype_id,
         });
 
         return response.status(200).json(appointment);

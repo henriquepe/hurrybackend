@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import CreateMusicStyleService from '../services/CreateMusicStyleService';
+import CreateMusicStyleService from '../services/MusicStyleServices/CreateMusicStyleService';
 import connection from '../database';
-import ListMusicStyleService from '../services/ListMusicStylesService';
+import ListMusicStyleService from '../services/MusicStyleServices/ListMusicStylesService';
 
 const musicstyleRouter = Router();
 

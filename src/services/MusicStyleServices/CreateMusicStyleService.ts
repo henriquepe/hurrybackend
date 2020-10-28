@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Service } from 'typedi';
-import MusicStyle from '../models/MusicStyle.entity';
-import MusicStylesRepository from '../repositories/MusicStylesRepository';
+import MusicStyle from '../../models/MusicStyle.entity';
+import MusicStylesRepository from '../../repositories/MusicStylesRepository';
 
 interface Request {
     name: string;

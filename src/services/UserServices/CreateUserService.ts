@@ -3,8 +3,8 @@ import { hash } from 'bcrypt';
 
 import { Service } from 'typedi';
 import { Connection } from 'typeorm';
-import User from '../models/User.entity';
-import UsersRepository from '../repositories/UsersRepository';
+import User from '../../models/User.entity';
+import UsersRepository from '../../repositories/UsersRepository';
 
 interface Request {
     name: string;
@@ -14,6 +14,12 @@ interface Request {
     musicInterest1_id: string;
     musicInterest2_id: string;
     musicInterest3_id: string;
+    love: boolean;
+    state: string;
+    city: string;
+    birthday: Date;
+    cpf: string;
+    cellphone: string;
 }
 
 @Service()
@@ -34,6 +40,12 @@ export default class CreateUserService {
         musicInterest1_id,
         musicInterest2_id,
         musicInterest3_id,
+        love,
+        state,
+        city,
+        birthday,
+        cpf,
+        cellphone,
     }: Request): Promise<User> {
         if (
             name === '' ||
@@ -42,7 +54,13 @@ export default class CreateUserService {
             avatar === '' ||
             musicInterest1_id === '' ||
             musicInterest2_id === '' ||
-            musicInterest3_id === ''
+            musicInterest3_id === '' ||
+            love === null ||
+            state === '' ||
+            city === '' ||
+            birthday === null ||
+            cpf === '' ||
+            cellphone === ''
         ) {
             throw new Error(
                 'Not suficient information to create an account, please fill all require information',
@@ -67,6 +85,12 @@ export default class CreateUserService {
             musicInterest1_id,
             musicInterest2_id,
             musicInterest3_id,
+            love,
+            state,
+            city,
+            birthday,
+            cpf,
+            cellphone,
         });
 
         await this.usersRepository.save(user);

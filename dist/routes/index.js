@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const appointments_routes_1 = __importDefault(require("./appointments.routes"));
+const eventType_routes_1 = __importDefault(require("./eventType.routes"));
 const musicstyle_routes_1 = __importDefault(require("./musicstyle.routes"));
 const sessions_routes_1 = __importDefault(require("./sessions.routes"));
 const users_routes_1 = __importDefault(require("./users.routes"));
@@ -13,4 +14,5 @@ routes.use('/appointments', appointments_routes_1.default);
 routes.use('/users', users_routes_1.default);
 routes.use('/sessions', sessions_routes_1.default);
 routes.use('/music', musicstyle_routes_1.default);
+routes.use('/eventType', eventType_routes_1.default);
 exports.default = routes;
