@@ -28,6 +28,9 @@ class Appointment {
     provider: string;
 
     @Column('varchar')
+    artists_ids: string[];
+
+    @Column('varchar')
     musicstyle_id: string;
 
     @ManyToOne(() => MusicStyle)

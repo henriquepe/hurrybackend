@@ -16,6 +16,7 @@ interface Request {
     state: string;
     city: string;
     street: string;
+    artists_ids: string[];
 }
 
 @Service()
@@ -39,6 +40,7 @@ export default class CreateAppointmentService {
         state,
         city,
         street,
+        artists_ids,
     }: Request): Promise<Appointment> {
         if (
             name === '' ||
@@ -74,6 +76,7 @@ export default class CreateAppointmentService {
             state: stateToLowerCase,
             city: cityToLowerCase,
             street: streetToLowerCase,
+            artists_ids,
         });
 
         await this.appointmentsRepository.save(appointment);

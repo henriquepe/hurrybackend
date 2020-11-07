@@ -21,7 +21,7 @@ let CreateAppointmentService = class CreateAppointmentService {
         this.connection = connection;
         this.appointmentsRepository = this.connection.getCustomRepository(AppointmentsRepository_1.default);
     }
-    async execute({ name, date, provider_id, tickets, eventImage, musicstyle_id, eventtype_id, state, city, street, }) {
+    async execute({ name, date, provider_id, tickets, eventImage, musicstyle_id, eventtype_id, state, city, street, artists_ids, }) {
         if (name === '' ||
             date === null ||
             provider_id === '' ||
@@ -48,6 +48,7 @@ let CreateAppointmentService = class CreateAppointmentService {
             state: stateToLowerCase,
             city: cityToLowerCase,
             street: streetToLowerCase,
+            artists_ids,
         });
         await this.appointmentsRepository.save(appointment);
         return appointment;

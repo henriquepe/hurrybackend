@@ -19,6 +19,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
             state,
             city,
             street,
+            artists_ids,
         } = request.body;
 
         const createAppointmentService = new CreateAppointmentService(
@@ -36,6 +37,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
             state,
             city,
             street,
+            artists_ids,
         });
 
         return response.status(200).json(appointment);
@@ -50,11 +52,11 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
 
 appointmentsRouter.get('/', async (request, response) => {
     try {
-        const listListAppointmentsService = new ListAppointmentsService(
+        const listAppointmentsService = new ListAppointmentsService(
             await connection,
         );
 
-        const appointments = await listListAppointmentsService.execute();
+        const appointments = await listAppointmentsService.execute();
 
         return response.status(200).json(appointments);
     } catch (err) {

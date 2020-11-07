@@ -11,7 +11,7 @@ const ListAppointmentsService_1 = __importDefault(require("../services/Appointme
 const appointmentsRouter = express_1.Router();
 appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, response) => {
     try {
-        const { provider_id, name, date, eventImage, tickets, musicstyle_id, eventtype_id, state, city, street, } = request.body;
+        const { provider_id, name, date, eventImage, tickets, musicstyle_id, eventtype_id, state, city, street, artists_ids, } = request.body;
         const createAppointmentService = new CreateAppointmentService_1.default(await database_1.default);
         const appointment = await createAppointmentService.execute({
             name,
@@ -24,6 +24,7 @@ appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, resp
             state,
             city,
             street,
+            artists_ids,
         });
         return response.status(200).json(appointment);
     }
@@ -36,8 +37,8 @@ appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, resp
 // lembrar de incluir autenticação ensureAuthenticated
 appointmentsRouter.get('/', async (request, response) => {
     try {
-        const listListAppointmentsService = new ListAppointmentsService_1.default(await database_1.default);
-        const appointments = await listListAppointmentsService.execute();
+        const listAppointmentsService = new ListAppointmentsService_1.default(await database_1.default);
+        const appointments = await listAppointmentsService.execute();
         return response.status(200).json(appointments);
     }
     catch (err) {

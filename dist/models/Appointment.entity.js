@@ -37,6 +37,10 @@ __decorate([
 ], Appointment.prototype, "provider", void 0);
 __decorate([
     typeorm_1.Column('varchar'),
+    __metadata("design:type", Array)
+], Appointment.prototype, "artists_ids", void 0);
+__decorate([
+    typeorm_1.Column('varchar'),
     __metadata("design:type", String)
 ], Appointment.prototype, "musicstyle_id", void 0);
 __decorate([
