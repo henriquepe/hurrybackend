@@ -17,6 +17,8 @@ const UpdateUserPasswordService_1 = __importDefault(require("../services/UserSer
 const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
 const UpdateProfileService_1 = __importDefault(require("../services/UserServices/UpdateProfileService"));
 const ShowOneUserService_1 = __importDefault(require("../services/UserServices/ShowOneUserService"));
+const DeleteUserService_1 = __importDefault(require("../services/UserServices/DeleteUserService"));
+const ShowEventsAboutUserInterestService_1 = __importDefault(require("../services/UserServices/ShowEventsAboutUserInterestService"));
 const usersRouter = express_1.Router();
 usersRouter.post('/', async (request, response) => {
     try {
@@ -38,7 +40,7 @@ usersRouter.post('/', async (request, response) => {
             cellphone,
         });
         delete user.password;
-        return response.json(user);
+        return response.status(200).json(user);
     }
     catch (err) {
         if (!err) {
@@ -49,24 +51,6 @@ usersRouter.post('/', async (request, response) => {
         return response.status(400).json({ error: err.message });
     }
 });
-// usersRouter.patch(
-//     '/avatar',
-//     ensureAuthenticated,
-//     upload.single('avatar'),
-//     async (request, response) => {
-//         try {
-//             const updateAvatar = new UpdateAvatarService(await connection);
-//             const { id } = request.user;
-//             const user = await updateAvatar.execute({
-//                 id,
-//                 avatarFilename: request.file.filename,
-//             });
-//             return response.status(200).json(user);
-//         } catch (err) {
-//             return response.status(400).json({ error: err.message });
-//         }
-//     },
-// );
 usersRouter.post('/resetPassword', async (request, response) => {
     try {
         const { email } = request.body;
@@ -77,7 +61,7 @@ usersRouter.post('/resetPassword', async (request, response) => {
             email,
             password: newPassword,
         });
-        return response.json({
+        return response.status(200).json({
             message: 'A new password was sended to your email',
         });
     }
@@ -114,18 +98,22 @@ usersRouter.get('/:id', async (request, response) => {
     }
 });
 usersRouter.post('/uploadAvatar', EnsureAuthenticated_1.default, multer_1.default(multer_2.default).single('avatar'), async (request, response) => {
-    console.log(request.file.originalname);
-    const { originalname, size, key, location: url = '' } = request.file;
-    const { id } = request.user;
-    const updateAvatarService = new UpdateAvatarService_1.default(await database_1.default);
-    const post = await updateAvatarService.execute({
-        id,
-        name: originalname,
-        size,
-        key,
-        url,
-    });
-    return response.json(post);
+    try {
+        const { originalname, size, key, location: url = '', } = request.file;
+        const { id } = request.user;
+        const updateAvatarService = new UpdateAvatarService_1.default(await database_1.default);
+        const post = await updateAvatarService.execute({
+            id,
+            name: originalname,
+            size,
+            key,
+            url,
+        });
+        return response.status(200).json(post);
+    }
+    catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
 });
 usersRouter.patch('/updateUserProfile', EnsureAuthenticated_1.default, async (request, response) => {
     try {
@@ -162,6 +150,30 @@ usersRouter.get('/', async (request, response) => {
             return user;
         });
         return response.status(200).json(secureListOfUsers);
+    }
+    catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
+usersRouter.delete('/deleteUser/:id', async (request, response) => {
+    try {
+        const deleteUserService = new DeleteUserService_1.default(await database_1.default);
+        const { id } = request.params;
+        await deleteUserService.execute({ user_id: id });
+        return response.status(200).json({ message: 'User sucessful deleted' });
+    }
+    catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
+usersRouter.post('/interests', EnsureAuthenticated_1.default, async (request, response) => {
+    try {
+        const { id } = request.user;
+        const showEventsAboutUserInterestService = new ShowEventsAboutUserInterestService_1.default(await database_1.default);
+        const appointments = await showEventsAboutUserInterestService.execute({
+            id,
+        });
+        return response.status(200).json(appointments);
     }
     catch (err) {
         return response.status(400).json({ error: err.message });

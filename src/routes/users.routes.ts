@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { getCustomRepository, getRepository } from 'typeorm';
+
 import multerConfig from '../config/multer';
 
 import uploadConfig from '../config/upload';
@@ -14,6 +15,8 @@ import UpdateUserPasswordService from '../services/UserServices/UpdateUserPasswo
 import UsersRepository from '../repositories/UsersRepository';
 import UpdateProfileService from '../services/UserServices/UpdateProfileService';
 import ShowOneUserService from '../services/UserServices/ShowOneUserService';
+import DeleteUserService from '../services/UserServices/DeleteUserService';
+import ShowEventsAboutUserInterestService from '../services/UserServices/ShowEventsAboutUserInterestService';
 
 const usersRouter = Router();
 
@@ -55,7 +58,7 @@ usersRouter.post('/', async (request, response) => {
 
         delete user.password;
 
-        return response.json(user);
+        return response.status(200).json(user);
     } catch (err) {
         if (!err) {
             return response.status(400).json({
@@ -67,28 +70,6 @@ usersRouter.post('/', async (request, response) => {
         return response.status(400).json({ error: err.message });
     }
 });
-
-// usersRouter.patch(
-//     '/avatar',
-//     ensureAuthenticated,
-//     upload.single('avatar'),
-//     async (request, response) => {
-//         try {
-//             const updateAvatar = new UpdateAvatarService(await connection);
-
-//             const { id } = request.user;
-
-//             const user = await updateAvatar.execute({
-//                 id,
-//                 avatarFilename: request.file.filename,
-//             });
-
-//             return response.status(200).json(user);
-//         } catch (err) {
-//             return response.status(400).json({ error: err.message });
-//         }
-//     },
-// );
 
 usersRouter.post('/resetPassword', async (request, response) => {
     try {
@@ -105,7 +86,7 @@ usersRouter.post('/resetPassword', async (request, response) => {
             password: newPassword,
         });
 
-        return response.json({
+        return response.status(200).json({
             message: 'A new password was sended to your email',
         });
     } catch (err) {
@@ -160,23 +141,32 @@ usersRouter.post(
     ensureAuthenticated,
     multer(multerConfig).single('avatar'),
     async (request, response) => {
-        console.log(request.file.originalname);
+        try {
+            const {
+                originalname,
+                size,
+                key,
+                location: url = '',
+            } = request.file;
 
-        const { originalname, size, key, location: url = '' } = request.file;
+            const { id } = request.user;
 
-        const { id } = request.user;
+            const updateAvatarService = new UpdateAvatarService(
+                await connection,
+            );
 
-        const updateAvatarService = new UpdateAvatarService(await connection);
+            const post = await updateAvatarService.execute({
+                id,
+                name: originalname,
+                size,
+                key,
+                url,
+            });
 
-        const post = await updateAvatarService.execute({
-            id,
-            name: originalname,
-            size,
-            key,
-            url,
-        });
-
-        return response.json(post);
+            return response.status(200).json(post);
+        } catch (err) {
+            return response.status(400).json({ error: err.message });
+        }
     },
 );
 
@@ -245,5 +235,43 @@ usersRouter.get('/', async (request, response) => {
         return response.status(400).json({ error: err.message });
     }
 });
+
+usersRouter.delete('/deleteUser/:id', async (request, response) => {
+    try {
+        const deleteUserService = new DeleteUserService(await connection);
+
+        const { id } = request.params;
+
+        await deleteUserService.execute({ user_id: id });
+
+        return response.status(200).json({ message: 'User sucessful deleted' });
+    } catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
+
+usersRouter.post(
+    '/interests',
+    ensureAuthenticated,
+    async (request, response) => {
+        try {
+            const { id } = request.user;
+
+            const showEventsAboutUserInterestService = new ShowEventsAboutUserInterestService(
+                await connection,
+            );
+
+            const appointments = await showEventsAboutUserInterestService.execute(
+                {
+                    id,
+                },
+            );
+
+            return response.status(200).json(appointments);
+        } catch (err) {
+            return response.status(400).json({ error: err.message });
+        }
+    },
+);
 
 export default usersRouter;

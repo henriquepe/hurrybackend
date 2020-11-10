@@ -3,6 +3,7 @@ import connection from '../database';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import CreateAppointmentService from '../services/AppointmentsServices/CreateAppointmentService';
 import ListAppointmentsService from '../services/AppointmentsServices/ListAppointmentsService';
+import ShowOneAppointmentService from '../services/AppointmentsServices/ShowOneAppointmentService';
 
 const appointmentsRouter = Router();
 
@@ -66,6 +67,24 @@ appointmentsRouter.get('/', async (request, response) => {
             });
         }
 
+        return response.status(400).json({ error: err.message });
+    }
+});
+
+appointmentsRouter.get('/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
+
+        const showOneAppointmentService = new ShowOneAppointmentService(
+            await connection,
+        );
+
+        const appointment = await showOneAppointmentService.execute({
+            appointment_id: id,
+        });
+
+        return response.status(200).json(appointment);
+    } catch (err) {
         return response.status(400).json({ error: err.message });
     }
 });

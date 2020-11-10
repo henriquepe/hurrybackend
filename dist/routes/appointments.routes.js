@@ -8,6 +8,7 @@ const database_1 = __importDefault(require("../database"));
 const EnsureAuthenticated_1 = __importDefault(require("../middlewares/EnsureAuthenticated"));
 const CreateAppointmentService_1 = __importDefault(require("../services/AppointmentsServices/CreateAppointmentService"));
 const ListAppointmentsService_1 = __importDefault(require("../services/AppointmentsServices/ListAppointmentsService"));
+const ShowOneAppointmentService_1 = __importDefault(require("../services/AppointmentsServices/ShowOneAppointmentService"));
 const appointmentsRouter = express_1.Router();
 appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, response) => {
     try {
@@ -47,6 +48,19 @@ appointmentsRouter.get('/', async (request, response) => {
                 error: 'Those events could not be listed now, try again later',
             });
         }
+        return response.status(400).json({ error: err.message });
+    }
+});
+appointmentsRouter.get('/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
+        const showOneAppointmentService = new ShowOneAppointmentService_1.default(await database_1.default);
+        const appointment = await showOneAppointmentService.execute({
+            appointment_id: id,
+        });
+        return response.status(200).json(appointment);
+    }
+    catch (err) {
         return response.status(400).json({ error: err.message });
     }
 });
