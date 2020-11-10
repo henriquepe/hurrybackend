@@ -36,12 +36,12 @@ class UpdateAvatarService {
 
         if (user) {
             const avatarOfUser = await postsRepository.findOne({
-                where: { id: user?.avatar_id },
+                where: { id: user.avatar_id },
             });
 
             if (avatarOfUser) {
                 const avatarKey = await postsRepository.findOne({
-                    where: { key: avatarOfUser?.key },
+                    where: { key: avatarOfUser.key },
                 });
 
                 if (avatarKey) {

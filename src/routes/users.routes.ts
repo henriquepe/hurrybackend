@@ -16,7 +16,6 @@ import UpdateProfileService from '../services/UserServices/UpdateProfileService'
 import ShowOneUserService from '../services/UserServices/ShowOneUserService';
 
 const usersRouter = Router();
-const upload = multer(uploadConfig);
 
 usersRouter.post('/', async (request, response) => {
     try {
@@ -54,6 +53,8 @@ usersRouter.post('/', async (request, response) => {
             cellphone,
         });
 
+        delete user.password;
+
         return response.json(user);
     } catch (err) {
         if (!err) {
@@ -67,27 +68,27 @@ usersRouter.post('/', async (request, response) => {
     }
 });
 
-usersRouter.patch(
-    '/avatar',
-    ensureAuthenticated,
-    upload.single('avatar'),
-    async (request, response) => {
-        try {
-            const updateAvatar = new UpdateAvatarService(await connection);
+// usersRouter.patch(
+//     '/avatar',
+//     ensureAuthenticated,
+//     upload.single('avatar'),
+//     async (request, response) => {
+//         try {
+//             const updateAvatar = new UpdateAvatarService(await connection);
 
-            const { id } = request.user;
+//             const { id } = request.user;
 
-            const user = await updateAvatar.execute({
-                user_id: id,
-                avatarFilename: request.file.filename,
-            });
+//             const user = await updateAvatar.execute({
+//                 id,
+//                 avatarFilename: request.file.filename,
+//             });
 
-            return response.status(200).json(user);
-        } catch (err) {
-            return response.status(400).json({ error: err.message });
-        }
-    },
-);
+//             return response.status(200).json(user);
+//         } catch (err) {
+//             return response.status(400).json({ error: err.message });
+//         }
+//     },
+// );
 
 usersRouter.post('/resetPassword', async (request, response) => {
     try {

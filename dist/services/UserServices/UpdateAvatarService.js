@@ -31,11 +31,11 @@ let UpdateAvatarService = class UpdateAvatarService {
         const s3 = new aws_sdk_1.default.S3();
         if (user) {
             const avatarOfUser = await postsRepository.findOne({
-                where: { id: user?.avatar_id },
+                where: { id: user.avatar_id },
             });
             if (avatarOfUser) {
                 const avatarKey = await postsRepository.findOne({
-                    where: { key: avatarOfUser?.key },
+                    where: { key: avatarOfUser.key },
                 });
                 if (avatarKey) {
                     s3.deleteObject({

@@ -7,7 +7,6 @@ const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const typeorm_1 = require("typeorm");
 const multer_2 = __importDefault(require("../config/multer"));
-const upload_1 = __importDefault(require("../config/upload"));
 const EnsureAuthenticated_1 = __importDefault(require("../middlewares/EnsureAuthenticated"));
 const CreateUserService_1 = __importDefault(require("../services/UserServices/CreateUserService"));
 const UpdateAvatarService_1 = __importDefault(require("../services/UserServices/UpdateAvatarService"));
@@ -19,7 +18,6 @@ const UsersRepository_1 = __importDefault(require("../repositories/UsersReposito
 const UpdateProfileService_1 = __importDefault(require("../services/UserServices/UpdateProfileService"));
 const ShowOneUserService_1 = __importDefault(require("../services/UserServices/ShowOneUserService"));
 const usersRouter = express_1.Router();
-const upload = multer_1.default(upload_1.default);
 usersRouter.post('/', async (request, response) => {
     try {
         const { name, email, password, avatar, musicinterest1_id, musicinterest2_id, musicinterest3_id, love, state, city, birthday, cpf, cellphone, } = request.body;
@@ -39,6 +37,7 @@ usersRouter.post('/', async (request, response) => {
             cpf,
             cellphone,
         });
+        delete user.password;
         return response.json(user);
     }
     catch (err) {
@@ -50,20 +49,24 @@ usersRouter.post('/', async (request, response) => {
         return response.status(400).json({ error: err.message });
     }
 });
-usersRouter.patch('/avatar', EnsureAuthenticated_1.default, upload.single('avatar'), async (request, response) => {
-    try {
-        const updateAvatar = new UpdateAvatarService_1.default(await database_1.default);
-        const { id } = request.user;
-        const user = await updateAvatar.execute({
-            user_id: id,
-            avatarFilename: request.file.filename,
-        });
-        return response.status(200).json(user);
-    }
-    catch (err) {
-        return response.status(400).json({ error: err.message });
-    }
-});
+// usersRouter.patch(
+//     '/avatar',
+//     ensureAuthenticated,
+//     upload.single('avatar'),
+//     async (request, response) => {
+//         try {
+//             const updateAvatar = new UpdateAvatarService(await connection);
+//             const { id } = request.user;
+//             const user = await updateAvatar.execute({
+//                 id,
+//                 avatarFilename: request.file.filename,
+//             });
+//             return response.status(200).json(user);
+//         } catch (err) {
+//             return response.status(400).json({ error: err.message });
+//         }
+//     },
+// );
 usersRouter.post('/resetPassword', async (request, response) => {
     try {
         const { email } = request.body;
