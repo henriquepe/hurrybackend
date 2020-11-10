@@ -8,6 +8,7 @@ import {
     JoinColumn,
 } from 'typeorm';
 import MusicStyle from './MusicStyle.entity';
+import Post from './Post.entity';
 
 @Entity('users')
 class User {
@@ -62,8 +63,15 @@ class User {
     @Column('varchar')
     password: string;
 
-    @Column('varchar')
+    @Column('uuid')
+    avatar_id: string;
+
+    @ManyToOne(() => Post)
+    @JoinColumn({ name: 'avatar_id' })
     avatar: string;
+
+    @Column()
+    avatar_url: string;
 
     @CreateDateColumn()
     created_at: Date;

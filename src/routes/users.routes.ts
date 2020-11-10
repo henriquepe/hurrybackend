@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import multer from 'multer';
+import { getCustomRepository, getRepository } from 'typeorm';
+import multerConfig from '../config/multer';
 
-import { getCustomRepository } from 'typeorm';
 import uploadConfig from '../config/upload';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import CreateUserService from '../services/UserServices/CreateUserService';
@@ -12,6 +13,7 @@ import SendNewPasswordByEmailService from '../services/UserServices/SendNewPassw
 import UpdateUserPasswordService from '../services/UserServices/UpdateUserPasswordService';
 import UsersRepository from '../repositories/UsersRepository';
 import UpdateProfileService from '../services/UserServices/UpdateProfileService';
+import ShowOneUserService from '../services/UserServices/ShowOneUserService';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
@@ -140,9 +142,9 @@ usersRouter.get('/:id', async (request, response) => {
     try {
         const { id } = request.params;
 
-        const usersRepository = getCustomRepository(UsersRepository);
+        const showOneUserService = new ShowOneUserService(await connection);
 
-        const user = await usersRepository.findOne(id);
+        const user = await showOneUserService.execute({ user_id: id });
 
         delete user.password;
 
@@ -151,6 +153,31 @@ usersRouter.get('/:id', async (request, response) => {
         return response.status(400).json({ err: err.message });
     }
 });
+
+usersRouter.post(
+    '/uploadAvatar',
+    ensureAuthenticated,
+    multer(multerConfig).single('avatar'),
+    async (request, response) => {
+        console.log(request.file.originalname);
+
+        const { originalname, size, key, location: url = '' } = request.file;
+
+        const { id } = request.user;
+
+        const updateAvatarService = new UpdateAvatarService(await connection);
+
+        const post = await updateAvatarService.execute({
+            id,
+            name: originalname,
+            size,
+            key,
+            url,
+        });
+
+        return response.json(post);
+    },
+);
 
 usersRouter.patch(
     '/updateUserProfile',

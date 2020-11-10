@@ -3,5 +3,13 @@ declare namespace Express {
         user: {
             id: string;
         };
+        file: {
+            key: string;
+            originalname: string;
+            size: number;
+            url: string;
+            filename: string;
+            location: string;
+        };
     }
 }

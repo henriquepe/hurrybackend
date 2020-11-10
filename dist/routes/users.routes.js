@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const multer_1 = __importDefault(require("multer"));
 const typeorm_1 = require("typeorm");
+const multer_2 = __importDefault(require("../config/multer"));
 const upload_1 = __importDefault(require("../config/upload"));
 const EnsureAuthenticated_1 = __importDefault(require("../middlewares/EnsureAuthenticated"));
 const CreateUserService_1 = __importDefault(require("../services/UserServices/CreateUserService"));
@@ -16,6 +17,7 @@ const SendNewPasswordByEmailService_1 = __importDefault(require("../services/Use
 const UpdateUserPasswordService_1 = __importDefault(require("../services/UserServices/UpdateUserPasswordService"));
 const UsersRepository_1 = __importDefault(require("../repositories/UsersRepository"));
 const UpdateProfileService_1 = __importDefault(require("../services/UserServices/UpdateProfileService"));
+const ShowOneUserService_1 = __importDefault(require("../services/UserServices/ShowOneUserService"));
 const usersRouter = express_1.Router();
 const upload = multer_1.default(upload_1.default);
 usersRouter.post('/', async (request, response) => {
@@ -99,14 +101,28 @@ usersRouter.post('/updatePassword', EnsureAuthenticated_1.default, async (reques
 usersRouter.get('/:id', async (request, response) => {
     try {
         const { id } = request.params;
-        const usersRepository = typeorm_1.getCustomRepository(UsersRepository_1.default);
-        const user = await usersRepository.findOne(id);
+        const showOneUserService = new ShowOneUserService_1.default(await database_1.default);
+        const user = await showOneUserService.execute({ user_id: id });
         delete user.password;
         return response.status(200).json({ user });
     }
     catch (err) {
         return response.status(400).json({ err: err.message });
     }
+});
+usersRouter.post('/uploadAvatar', EnsureAuthenticated_1.default, multer_1.default(multer_2.default).single('avatar'), async (request, response) => {
+    console.log(request.file.originalname);
+    const { originalname, size, key, location: url = '' } = request.file;
+    const { id } = request.user;
+    const updateAvatarService = new UpdateAvatarService_1.default(await database_1.default);
+    const post = await updateAvatarService.execute({
+        id,
+        name: originalname,
+        size,
+        key,
+        url,
+    });
+    return response.json(post);
 });
 usersRouter.patch('/updateUserProfile', EnsureAuthenticated_1.default, async (request, response) => {
     try {

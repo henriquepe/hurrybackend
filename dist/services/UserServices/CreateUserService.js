@@ -26,7 +26,6 @@ let CreateUserService = class CreateUserService {
         if (name === '' ||
             email === '' ||
             password === '' ||
-            avatar === '' ||
             musicInterest1_id === '' ||
             musicInterest2_id === '' ||
             musicInterest3_id === '' ||

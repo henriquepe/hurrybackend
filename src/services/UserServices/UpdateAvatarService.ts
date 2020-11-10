@@ -1,19 +1,20 @@
 /* eslint-disable no-useless-concat */
 /* eslint-disable no-path-concat */
 /* eslint-disable no-useless-constructor */
-import path from 'path';
-import fs from 'fs';
 
 import { Service } from 'typedi';
-import { Connection } from 'typeorm';
-import User from '../../models/User.entity';
+import { Connection, getRepository } from 'typeorm';
 
-import uploadConfig from '../../config/upload';
+import AWS from 'aws-sdk';
 import UsersRepository from '../../repositories/UsersRepository';
+import Post from '../../models/Post.entity';
 
 interface Request {
-    user_id: string;
-    avatarFilename: string;
+    id: string;
+    name: string;
+    size: number;
+    key: string;
+    url: string;
 }
 
 @Service()
@@ -26,39 +27,62 @@ class UpdateAvatarService {
         );
     }
 
-    public async execute({ user_id, avatarFilename }: Request): Promise<User> {
-        const user = await this.usersRepository.findOne(user_id);
+    public async execute({ id, name, key, size, url }: Request): Promise<Post> {
+        const user = await this.usersRepository.findOne(id);
 
-        if (!user) {
-            throw new Error('Only authenticated users can change avatar');
+        const postsRepository = getRepository(Post, 'default');
+
+        const s3 = new AWS.S3();
+
+        if (user) {
+            const avatarOfUser = await postsRepository.findOne({
+                where: { id: user?.avatar_id },
+            });
+
+            if (avatarOfUser) {
+                const avatarKey = await postsRepository.findOne({
+                    where: { key: avatarOfUser?.key },
+                });
+
+                if (avatarKey) {
+                    s3.deleteObject({
+                        Bucket: 'hurryawsbucket',
+                        Key: `${avatarKey.key}`,
+                    }).promise();
+                }
+            }
         }
 
-        const { directory } = uploadConfig;
+        if (!user) {
+            throw new Error(
+                'Only authenticated users can upload their avatars',
+            );
+        }
 
-        // eslint-disable-next-line prefer-template
-        // eslint-disable-next-line no-useless-concat
-        // eslint-disable-next-line prefer-template
-        // await fs.promises.mkdir(__dirname + '..' + '..' + 'tmp');
+        const post = postsRepository.create({
+            name,
+            size,
+            key,
+            url,
+        });
 
-        // if (user.avatar) {
-        //     const userAvatarFilePath = path.join(directory, user.avatar);
+        await postsRepository.save(post);
 
-        //     const userAvatarFileExists = await fs.promises.stat(
-        //         userAvatarFilePath,
-        //     );
+        const alreadyCreatedPost = await postsRepository.findOne({
+            where: { key },
+        });
 
-        //     if (userAvatarFileExists) {
-        //         await fs.promises.unlink(userAvatarFilePath);
-        //     }
-        // }
-
-        user.avatar = avatarFilename;
+        if (alreadyCreatedPost) {
+            user.avatar_id = alreadyCreatedPost.id;
+            user.avatar_url = alreadyCreatedPost.url;
+            this.usersRepository.save(user);
+        } else {
+            throw new Error('Post not found');
+        }
 
         await this.usersRepository.save(user);
 
-        delete user.password;
-
-        return user;
+        return post;
     }
 }
 

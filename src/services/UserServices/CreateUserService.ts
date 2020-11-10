@@ -51,7 +51,6 @@ export default class CreateUserService {
             name === '' ||
             email === '' ||
             password === '' ||
-            avatar === '' ||
             musicInterest1_id === '' ||
             musicInterest2_id === '' ||
             musicInterest3_id === '' ||

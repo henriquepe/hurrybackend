@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const MusicStyle_entity_1 = __importDefault(require("./MusicStyle.entity"));
+const Post_entity_1 = __importDefault(require("./Post.entity"));
 let User = class User {
 };
 __decorate([
@@ -84,9 +85,18 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    typeorm_1.Column('varchar'),
+    typeorm_1.Column('uuid'),
+    __metadata("design:type", String)
+], User.prototype, "avatar_id", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => Post_entity_1.default),
+    typeorm_1.JoinColumn({ name: 'avatar_id' }),
     __metadata("design:type", String)
 ], User.prototype, "avatar", void 0);
+__decorate([
+    typeorm_1.Column(),
+    __metadata("design:type", String)
+], User.prototype, "avatar_url", void 0);
 __decorate([
     typeorm_1.CreateDateColumn(),
     __metadata("design:type", Date)
