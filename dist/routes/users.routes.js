@@ -174,7 +174,7 @@ usersRouter.post('/interests', EnsureAuthenticated_1.default, async (request, re
         return response.status(200).json(appointments);
     }
     catch (err) {
-        return response.status(400).json({ error: err.message });
+        return response.status(400).json({ error: err.name });
     }
 });
 usersRouter.post('/eventTypes', async (request, response) => {

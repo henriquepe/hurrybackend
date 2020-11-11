@@ -265,7 +265,7 @@ usersRouter.post(
 
             return response.status(200).json(appointments);
         } catch (err) {
-            return response.status(400).json({ error: err.message });
+            return response.status(400).json({ error: err.name });
         }
     },
 );
