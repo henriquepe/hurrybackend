@@ -19,6 +19,7 @@ const UpdateProfileService_1 = __importDefault(require("../services/UserServices
 const ShowOneUserService_1 = __importDefault(require("../services/UserServices/ShowOneUserService"));
 const DeleteUserService_1 = __importDefault(require("../services/UserServices/DeleteUserService"));
 const ShowEventsAboutUserInterestService_1 = __importDefault(require("../services/UserServices/ShowEventsAboutUserInterestService"));
+const ShowEventsWithEventTypeInteresOfUser_1 = __importDefault(require("../services/UserServices/ShowEventsWithEventTypeInteresOfUser"));
 const usersRouter = express_1.Router();
 usersRouter.post('/', async (request, response) => {
     try {
@@ -43,12 +44,9 @@ usersRouter.post('/', async (request, response) => {
         return response.status(200).json(user);
     }
     catch (err) {
-        if (!err) {
-            return response.status(400).json({
-                error: 'Something went wrong, we could not create your account right now, try again later',
-            });
-        }
-        return response.status(400).json({ error: err.message });
+        return response.status(400).json({
+            error: 'Something went wrong, we could not create your account right now, try again later',
+        });
     }
 });
 usersRouter.post('/resetPassword', async (request, response) => {
@@ -174,6 +172,17 @@ usersRouter.post('/interests', EnsureAuthenticated_1.default, async (request, re
             id,
         });
         return response.status(200).json(appointments);
+    }
+    catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
+usersRouter.post('/eventTypes', async (request, response) => {
+    try {
+        const { eventType_id } = request.body;
+        const showEventsWithEventTypeInteresOfUser = new ShowEventsWithEventTypeInteresOfUser_1.default(await database_1.default);
+        const appointmentsFiltredWithEventType = await showEventsWithEventTypeInteresOfUser.execute({ eventType_id });
+        return response.status(200).json(appointmentsFiltredWithEventType);
     }
     catch (err) {
         return response.status(400).json({ error: err.message });

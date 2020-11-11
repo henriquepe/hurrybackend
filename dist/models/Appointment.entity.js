@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const EventType_entity_1 = __importDefault(require("./EventType.entity"));
 const MusicStyle_entity_1 = __importDefault(require("./MusicStyle.entity"));
+const Post_entity_1 = __importDefault(require("./Post.entity"));
 const User_entity_1 = __importDefault(require("./User.entity"));
 let Appointment = class Appointment {
 };
@@ -63,6 +64,15 @@ __decorate([
 ], Appointment.prototype, "date", void 0);
 __decorate([
     typeorm_1.Column('varchar'),
+    __metadata("design:type", String)
+], Appointment.prototype, "eventImage_url", void 0);
+__decorate([
+    typeorm_1.Column('uuid'),
+    __metadata("design:type", String)
+], Appointment.prototype, "eventImage_id", void 0);
+__decorate([
+    typeorm_1.ManyToOne(() => Post_entity_1.default),
+    typeorm_1.JoinColumn({ name: 'eventImage_id' }),
     __metadata("design:type", String)
 ], Appointment.prototype, "eventImage", void 0);
 __decorate([

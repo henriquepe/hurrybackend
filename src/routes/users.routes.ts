@@ -4,7 +4,6 @@ import { getCustomRepository, getRepository } from 'typeorm';
 
 import multerConfig from '../config/multer';
 
-import uploadConfig from '../config/upload';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import CreateUserService from '../services/UserServices/CreateUserService';
 import UpdateAvatarService from '../services/UserServices/UpdateAvatarService';
@@ -17,6 +16,7 @@ import UpdateProfileService from '../services/UserServices/UpdateProfileService'
 import ShowOneUserService from '../services/UserServices/ShowOneUserService';
 import DeleteUserService from '../services/UserServices/DeleteUserService';
 import ShowEventsAboutUserInterestService from '../services/UserServices/ShowEventsAboutUserInterestService';
+import ShowEventsWithEventTypeInteresOfUser from '../services/UserServices/ShowEventsWithEventTypeInteresOfUser';
 
 const usersRouter = Router();
 
@@ -60,14 +60,10 @@ usersRouter.post('/', async (request, response) => {
 
         return response.status(200).json(user);
     } catch (err) {
-        if (!err) {
-            return response.status(400).json({
-                error:
-                    'Something went wrong, we could not create your account right now, try again later',
-            });
-        }
-
-        return response.status(400).json({ error: err.message });
+        return response.status(400).json({
+            error:
+                'Something went wrong, we could not create your account right now, try again later',
+        });
     }
 });
 
@@ -273,5 +269,23 @@ usersRouter.post(
         }
     },
 );
+
+usersRouter.post('/eventTypes', async (request, response) => {
+    try {
+        const { eventType_id } = request.body;
+
+        const showEventsWithEventTypeInteresOfUser = new ShowEventsWithEventTypeInteresOfUser(
+            await connection,
+        );
+
+        const appointmentsFiltredWithEventType = await showEventsWithEventTypeInteresOfUser.execute(
+            { eventType_id },
+        );
+
+        return response.status(200).json(appointmentsFiltredWithEventType);
+    } catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
 
 export default usersRouter;

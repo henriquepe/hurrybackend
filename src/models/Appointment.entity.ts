@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import EventType from './EventType.entity';
 import MusicStyle from './MusicStyle.entity';
+import Post from './Post.entity';
 
 import User from './User.entity';
 
@@ -48,6 +49,13 @@ class Appointment {
     date: Date;
 
     @Column('varchar')
+    eventImage_url: string;
+
+    @Column('uuid')
+    eventImage_id: string;
+
+    @ManyToOne(() => Post)
+    @JoinColumn({ name: 'eventImage_id' })
     eventImage: string;
 
     @Column('numeric')

@@ -1,9 +1,13 @@
 import { Router } from 'express';
+import multer from 'multer';
 import connection from '../database';
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
 import CreateAppointmentService from '../services/AppointmentsServices/CreateAppointmentService';
 import ListAppointmentsService from '../services/AppointmentsServices/ListAppointmentsService';
 import ShowOneAppointmentService from '../services/AppointmentsServices/ShowOneAppointmentService';
+
+import multerConfig from '../config/multer';
+import UpdateEventImageService from '../services/AppointmentsServices/UpdateEventImageService';
 
 const appointmentsRouter = Router();
 
@@ -88,5 +92,39 @@ appointmentsRouter.get('/:id', async (request, response) => {
         return response.status(400).json({ error: err.message });
     }
 });
+
+appointmentsRouter.post(
+    '/uploadEventImage/:id',
+    ensureAuthenticated,
+    multer(multerConfig).single('avatar'),
+    async (request, response) => {
+        try {
+            const {
+                originalname,
+                size,
+                key,
+                location: url = '',
+            } = request.file;
+
+            const { id } = request.params;
+
+            const updateEventImageService = new UpdateEventImageService(
+                await connection,
+            );
+
+            const post = await updateEventImageService.execute({
+                id,
+                name: originalname,
+                size,
+                key,
+                url,
+            });
+
+            return response.status(200).json(post);
+        } catch (err) {
+            return response.status(400).json({ error: err.message });
+        }
+    },
+);
 
 export default appointmentsRouter;

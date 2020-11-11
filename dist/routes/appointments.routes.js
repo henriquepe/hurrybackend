@@ -4,11 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const multer_1 = __importDefault(require("multer"));
 const database_1 = __importDefault(require("../database"));
 const EnsureAuthenticated_1 = __importDefault(require("../middlewares/EnsureAuthenticated"));
 const CreateAppointmentService_1 = __importDefault(require("../services/AppointmentsServices/CreateAppointmentService"));
 const ListAppointmentsService_1 = __importDefault(require("../services/AppointmentsServices/ListAppointmentsService"));
 const ShowOneAppointmentService_1 = __importDefault(require("../services/AppointmentsServices/ShowOneAppointmentService"));
+const multer_2 = __importDefault(require("../config/multer"));
+const UpdateEventImageService_1 = __importDefault(require("../services/AppointmentsServices/UpdateEventImageService"));
 const appointmentsRouter = express_1.Router();
 appointmentsRouter.post('/', EnsureAuthenticated_1.default, async (request, response) => {
     try {
@@ -59,6 +62,24 @@ appointmentsRouter.get('/:id', async (request, response) => {
             appointment_id: id,
         });
         return response.status(200).json(appointment);
+    }
+    catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
+});
+appointmentsRouter.post('/uploadEventImage/:id', EnsureAuthenticated_1.default, multer_1.default(multer_2.default).single('avatar'), async (request, response) => {
+    try {
+        const { originalname, size, key, location: url = '', } = request.file;
+        const { id } = request.params;
+        const updateEventImageService = new UpdateEventImageService_1.default(await database_1.default);
+        const post = await updateEventImageService.execute({
+            id,
+            name: originalname,
+            size,
+            key,
+            url,
+        });
+        return response.status(200).json(post);
     }
     catch (err) {
         return response.status(400).json({ error: err.message });
