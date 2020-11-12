@@ -1,4 +1,5 @@
 import { Router } from 'express';
+
 import appointmentsRouter from './appointments.routes';
 import drinksRouter from './drinks.routes';
 import eventTypeRouter from './eventType.routes';

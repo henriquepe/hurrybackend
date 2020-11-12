@@ -8,11 +8,12 @@ interface TokenPayload {
     sub: string;
 }
 
+// eslint-disable-next-line consistent-return
 export default function ensureAuthenticated(
     request: Request,
     response: Response,
     next: NextFunction,
-): void {
+): void | Response<any> {
     // [] validação do token
 
     const authHeader = request.headers.authorization;
@@ -25,17 +26,21 @@ export default function ensureAuthenticated(
 
     const { secret } = jwt.jwt;
 
-    const decodedToken = verify(token, secret);
+    try {
+        const decodedToken = verify(token, secret);
 
-    if (!decodedToken) {
-        throw new Error('Invalid JWT Token ');
+        if (!decodedToken) {
+            throw new Error('Invalid JWT Token ');
+        }
+
+        const { sub } = decodedToken as TokenPayload;
+
+        request.user = {
+            id: sub,
+        };
+
+        return next();
+    } catch (err) {
+        return response.status(401).json({ error: err.message });
     }
-
-    const { sub } = decodedToken as TokenPayload;
-
-    request.user = {
-        id: sub,
-    };
-
-    return next();
 }

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import { getCustomRepository, getRepository } from 'typeorm';
 
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import multerConfig from '../config/multer';
 
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
@@ -265,7 +266,7 @@ usersRouter.post(
 
             return response.status(200).json(appointments);
         } catch (err) {
-            return response.status(400).json({ error: err.name });
+            return response.status(400).json(err.message);
         }
     },
 );
