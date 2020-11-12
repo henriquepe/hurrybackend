@@ -25,7 +25,6 @@ let AuthenticationService = class AuthenticationService {
         this.usersRepository = this.connection.getCustomRepository(UsersRepository_1.default);
     }
     async execute({ email, password }) {
-        console.log(email);
         const user = await this.usersRepository.findOne({
             where: { email },
         });

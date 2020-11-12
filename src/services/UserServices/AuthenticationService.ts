@@ -30,8 +30,6 @@ class AuthenticationService {
     }
 
     public async execute({ email, password }: Request): Promise<Response> {
-        console.log(email);
-
         const user = await this.usersRepository.findOne({
             where: { email },
         });
