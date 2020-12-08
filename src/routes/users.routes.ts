@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import multer from 'multer';
-import { getCustomRepository, getRepository } from 'typeorm';
+import { getCustomRepository } from 'typeorm';
 
-import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import multerConfig from '../config/multer';
 
 import ensureAuthenticated from '../middlewares/EnsureAuthenticated';
@@ -64,6 +63,7 @@ usersRouter.post('/', async (request, response) => {
         return response.status(400).json({
             error:
                 'Something went wrong, we could not create your account right now, try again later',
+            serverEerror: err.message,
         });
     }
 });

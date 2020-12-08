@@ -46,6 +46,7 @@ usersRouter.post('/', async (request, response) => {
     catch (err) {
         return response.status(400).json({
             error: 'Something went wrong, we could not create your account right now, try again later',
+            serverEerror: err.message,
         });
     }
 });
