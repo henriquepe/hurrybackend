@@ -9,9 +9,9 @@
 ***ROTA AUTENTICADA***
 
 Sem necessidade de corpo (body)
-Retorno esperado
 
-Exemplo: 
+
+Retorno esperado, exemplo: 
   
 ```json
 [
@@ -47,9 +47,7 @@ Exemplo:
 
 ```
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 [
@@ -79,9 +77,8 @@ Exemplo:
 
 
 Sem necessidade de corpo (body)
-Retorno esperado
 
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 {
@@ -102,9 +99,7 @@ Exemplo:
 ```
 
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 {
@@ -121,9 +116,7 @@ Exemplo:
 avatar : FILE(exemplo: profile.jpg)
 
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 {
@@ -142,9 +135,7 @@ Exemplo:
 ***ROTA AUTENTICADA***
 
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 {
@@ -192,9 +183,7 @@ Exemplo:
 }
 ```
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 {
@@ -233,9 +222,7 @@ Exemplo:
 }
 ```
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 {
@@ -267,9 +254,7 @@ Exemplo:
 }
 ```
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo:  
   
 ```json
 {
@@ -296,9 +281,7 @@ Exemplo:
 
 Sem necessidade de corpo (body)
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 [
@@ -338,9 +321,7 @@ Exemplo:
 }
 ```
 
-Retorno esperado
-
-Exemplo: 
+Retorno esperado, exemplo: 
   
 ```json
 {
