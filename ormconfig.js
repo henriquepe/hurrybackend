@@ -9,8 +9,8 @@ module.exports = {
     // "port": 5432,
 
     "entities": [
-        // "./dist/models/**/*.js",
-        "./src/models/**/*.ts"
+        "./dist/models/**/*.js",
+        // "./src/models/**/*.ts"
     ],
     "migrations": [
         // "./dist/database/**/migrations/*.js",
@@ -18,7 +18,7 @@ module.exports = {
     ],
     "cli": {
         "migrationsDir": "./src/database/migrations",
-        // "entitiesDir": "./dist/models",
-        "entitiesDir": "./src/models"
+        "entitiesDir": "./dist/models",
+        // "entitiesDir": "./src/models"
     }
 }
