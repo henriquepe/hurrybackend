@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import multer from 'multer';
 import path from 'path';
@@ -17,9 +18,9 @@ const storageTypes = {
             crypto.randomBytes(16, (err, hash) => {
                 if (err) callback(err, '');
 
-                request.file.key = `${hash.toString('hex')}${
-                    file.originalname
-                }`;
+                request.file.key = `${hash.toString('hex')}${file.originalname
+                    // eslint-disable-next-line prettier/prettier
+                    }`;
 
                 callback(null, request.file.key);
             });
@@ -28,7 +29,7 @@ const storageTypes = {
 
     s3: multerS3({
         s3: new AWS.S3(),
-        bucket: 'hurryawsbucket',
+        bucket: 'hurrybucket',
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: (request, file, callback) => {

@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const multer_1 = __importDefault(require("multer"));
 const path_1 = __importDefault(require("path"));
@@ -18,14 +19,16 @@ const storageTypes = {
             crypto_1.default.randomBytes(16, (err, hash) => {
                 if (err)
                     callback(err, '');
-                request.file.key = `${hash.toString('hex')}${file.originalname}`;
+                request.file.key = `${hash.toString('hex')}${file.originalname
+                // eslint-disable-next-line prettier/prettier
+                }`;
                 callback(null, request.file.key);
             });
         },
     }),
     s3: multer_s3_1.default({
         s3: new aws_sdk_1.default.S3(),
-        bucket: 'hurryawsbucket',
+        bucket: 'hurrybucket',
         contentType: multer_s3_1.default.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: (request, file, callback) => {
