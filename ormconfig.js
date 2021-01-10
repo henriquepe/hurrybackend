@@ -1,3 +1,4 @@
+/* eslint-disable no-path-concat */
 /* eslint-disable prettier/prettier */
 module.exports = {
     // "type": "postgres",
@@ -9,7 +10,9 @@ module.exports = {
     "port": 5432,
 
     "entities": [
-        "./dist/models/**/*.js",
+        // eslint-disable-next-line no-path-concat
+        // eslint-disable-next-line prefer-template
+        __dirname + '/**/*.entity.{js,ts}',
         // "./src/models/**/*.ts"
     ],
     "migrations": [
