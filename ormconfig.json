@@ -1,0 +1,16 @@
+{
+    "type": "postgres",
+    "url": "postgres://hurrydb:hurrydatabase@hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com:5432/hurrydb",
+    "entities": [
+        "./dist/models/**/*.entity.js"
+    ],
+    "migrations": [
+        "./dist/database/**/migrations/*.js"
+    ],
+    "cli": {
+        "migrationsDir": "./src/database/migrations",
+        "entitiesDir": [
+            "./dist/models"
+        ]
+    }
+}
