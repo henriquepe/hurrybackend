@@ -2,24 +2,26 @@
 /* eslint-disable no-path-concat */
 /* eslint-disable prefer-template */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const path = require('path');
+
 
 module.exports = {
     // "type": "postgres",
     // "url":
     //     "postgres://hurrydb:hurrydatabase@hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com:5432/hurrydb",
     "type": "postgres",
-    "host": "hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com",
-    "database": "postgres",
+    "host": "hurrydb-instance-1-us-east-2b.cvx6sc53gqyv.us-east-2.rds.amazonaws.com",
+
     "username": "hurrydb",
     "password": "hurrydatabase",
     "port": 5432,
+    "database": "postgres",
+
 
     "entities": [
         // eslint-disable-next-line no-path-concat
         // eslint-disable-next-line no-useless-concat
 
-        "dist/models/**/*.js",
+        "dist/models/**/*.entity.js",
         // "./src/models/**/*.ts"
         // User,
         // Appointment,
