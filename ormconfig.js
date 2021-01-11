@@ -1,14 +1,14 @@
 module.exports = {
-    // "type": "postgres",
-    // "url":
-    //     "postgres://hurrydb:hurrydatabase@hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com:5432/hurrydb",
     type: 'postgres',
-    host: 'hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com',
+    url:
+        'postgres://hurrydb:hurrydatabase@hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com:5432/hurrydb',
+    // type: 'postgres',
+    // host: 'hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com',
 
-    username: 'hurrydb',
-    password: 'hurrydatabase',
-    port: 5432,
-    database: 'postgres',
+    // username: 'hurrydb',
+    // password: 'hurrydatabase',
+    // port: 5432,
+    // database: 'hurrydb',
 
     entities: [
         // eslint-disable-next-line no-path-concat
