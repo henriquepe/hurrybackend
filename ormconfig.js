@@ -10,7 +10,7 @@ import EventType from './src/models/EventType.entity';
 
 module.exports = {
     "type": "postgres",
-    "url": "postgres://hurrydb:hurrydatabase@hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com:5432/postgres",
+    "url": "postgres://hurrydb:hurrydatabase@hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com:5432/hurrydb",
     // "type": "postgres",
     // "host": "hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com",
     // "username": "hurrydb",
@@ -18,17 +18,17 @@ module.exports = {
     // "port": 5432,
 
     "entities": [
-        // "dist/models/*.js",
+        "./dist/models/**/*.entity.js",
         // "./src/models/**/*.ts"
-        User,
-        Appointment,
-        Post,
-        MusicStyle,
-        Drink,
-        EventType
+        // User,
+        // Appointment,
+        // Post,
+        // MusicStyle,
+        // Drink,
+        // EventType
     ],
     "migrations": [
-        "dist/database/**/migrations/*.js",
+        "./dist/database/**/migrations/*.js",
         // "./src/database/**/migrations/*.ts"
     ],
     "cli": {
