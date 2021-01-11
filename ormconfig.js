@@ -17,8 +17,8 @@ module.exports = {
     "entities": [
         // eslint-disable-next-line no-path-concat
         // eslint-disable-next-line no-useless-concat
-        path.join(__dirname + 'dist' + 'models' + '**' + '*.ts'),
-        // './dist/models/**/*.entity.js',
+
+        './dist/models/**/*.entity.js',
         // "./src/models/**/*.ts"
         // User,
         // Appointment,
@@ -36,7 +36,7 @@ module.exports = {
         "entitiesDir": [
             // './dist/models',
             // eslint-disable-next-line no-useless-concat
-            path.join(__dirname + 'dist' + 'models'),
+            "./dist/models"
         ],
         // "entitiesDir": "./src/models"
     },
