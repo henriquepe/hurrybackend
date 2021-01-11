@@ -3,8 +3,7 @@ module.exports = {
     // "url":
     //     "postgres://hurrydb:hurrydatabase@hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com:5432/hurrydb",
     type: 'postgres',
-    host:
-        'hurrydb-instance-1-us-east-2b.cvx6sc53gqyv.us-east-2.rds.amazonaws.com',
+    host: 'hurrydb.cvx6sc53gqyv.us-east-2.rds.amazonaws.com',
 
     username: 'hurrydb',
     password: 'hurrydatabase',
