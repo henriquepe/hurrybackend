@@ -24,8 +24,8 @@ module.exports = {
         // EventType
     ],
     migrations: [
-        './dist/database/**/migrations/*.js',
-        // "./src/database/**/migrations/*.ts"
+        // './dist/database/**/migrations/*.js',
+        './src/database/**/migrations/*.ts',
     ],
     cli: {
         migrationsDir: './src/database/migrations',
