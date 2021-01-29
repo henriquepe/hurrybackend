@@ -9,6 +9,16 @@ import AWS from 'aws-sdk';
 import UsersRepository from '../../repositories/UsersRepository';
 import Post from '../../models/Post.entity';
 
+process.env.NODE_ENV = 'development';
+
+let bucket = '';
+
+if (process.env.NODE_ENV === 'development') {
+    bucket = process.env.BUCKET_DEVELOPMENT as string;
+} else {
+    bucket = process.env.BUCKET_PRODUCTION as string;
+}
+
 interface Request {
     id: string;
     name: string;
@@ -46,7 +56,7 @@ class UpdateAvatarService {
 
                 if (avatarKey) {
                     s3.deleteObject({
-                        Bucket: 'hurryawsbucket',
+                        Bucket: bucket,
                         Key: `${avatarKey.key}`,
                     }).promise();
                 }
