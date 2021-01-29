@@ -4,8 +4,6 @@ let migrations = [];
 let migrationsDir = '';
 let entitiesDir = '';
 
-process.env.NODE_ENV = 'development';
-
 if (process.env.NODE_ENV === 'development') {
     url = process.env.DB_DEVELOPMENT;
     entities = process.env.ENTITIES_DEVELOPMENT;

@@ -9,8 +9,6 @@ import AWS from 'aws-sdk';
 import UsersRepository from '../../repositories/UsersRepository';
 import Post from '../../models/Post.entity';
 
-process.env.NODE_ENV = 'development';
-
 let bucket = '';
 
 if (process.env.NODE_ENV === 'development') {

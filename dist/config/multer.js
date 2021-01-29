@@ -10,7 +10,6 @@ const path_1 = __importDefault(require("path"));
 const crypto_1 = __importDefault(require("crypto"));
 const multer_s3_1 = __importDefault(require("multer-s3"));
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
-process.env.NODE_ENV = 'development';
 let bucket = '';
 if (process.env.NODE_ENV === 'development') {
     bucket = process.env.BUCKET_DEVELOPMENT;

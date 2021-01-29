@@ -20,7 +20,6 @@ const typeorm_1 = require("typeorm");
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const UsersRepository_1 = __importDefault(require("../../repositories/UsersRepository"));
 const Post_entity_1 = __importDefault(require("../../models/Post.entity"));
-process.env.NODE_ENV = 'development';
 let bucket = '';
 if (process.env.NODE_ENV === 'development') {
     bucket = process.env.BUCKET_DEVELOPMENT;

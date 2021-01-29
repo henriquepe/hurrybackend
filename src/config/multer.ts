@@ -6,7 +6,7 @@ import crypto from 'crypto';
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 
-process.env.NODE_ENV = 'development';
+
 
 let bucket = '';
 
