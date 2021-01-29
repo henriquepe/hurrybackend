@@ -19,6 +19,8 @@
         "prettier"
     ],
     "rules": {
+        "no-param-reassign": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
         "class-methods-use-this": 0,
         "camelcase": 0,
         "prettier/prettier": "error",

@@ -7,14 +7,18 @@ import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 
 
+function handleBucket() {
+    let bucket = '';
 
-let bucket = '';
-
-if (process.env.NODE_ENV === 'development') {
-    bucket = process.env.BUCKET_DEVELOPMENT as string;
-} else {
+    if (process.env.NODE_ENV === 'development') {
+        bucket = process.env.BUCKET_DEVELOPMENT as string;
+        return bucket
+    }
     bucket = process.env.BUCKET_PRODUCTION as string;
+    return bucket
+
 }
+
 
 const storageTypes = {
     local: multer.diskStorage({
@@ -39,7 +43,7 @@ const storageTypes = {
 
     s3: multerS3({
         s3: new AWS.S3(),
-        bucket,
+        bucket: handleBucket,
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: (request, file, callback) => {

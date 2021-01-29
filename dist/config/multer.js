@@ -10,12 +10,14 @@ const path_1 = __importDefault(require("path"));
 const crypto_1 = __importDefault(require("crypto"));
 const multer_s3_1 = __importDefault(require("multer-s3"));
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
-let bucket = '';
-if (process.env.NODE_ENV === 'development') {
-    bucket = process.env.BUCKET_DEVELOPMENT;
-}
-else {
+function handleBucket() {
+    let bucket = '';
+    if (process.env.NODE_ENV === 'development') {
+        bucket = process.env.BUCKET_DEVELOPMENT;
+        return bucket;
+    }
     bucket = process.env.BUCKET_PRODUCTION;
+    return bucket;
 }
 const storageTypes = {
     local: multer_1.default.diskStorage({
@@ -35,7 +37,7 @@ const storageTypes = {
     }),
     s3: multer_s3_1.default({
         s3: new aws_sdk_1.default.S3(),
-        bucket,
+        bucket: handleBucket,
         contentType: multer_s3_1.default.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: (request, file, callback) => {
@@ -71,3 +73,4 @@ exports.default = {
         }
     },
 };
+//# sourceMappingURL=multer.js.map

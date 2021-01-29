@@ -5,11 +5,12 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "start": "NODE_ENV=production node ./dist/server.js",
-        "dev:start": "nodemon ./dist/server.js",
-        "watch-node": "nodemon ./dist/server.js",
-        "dev:server": "NODE_ENV=development ts-node-dev --transpile-only --ignore-watch node_modules ./src/server.ts",
-        "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+        "start": "NODE_ENV=production node ./dist/shared/infra/http/server.ts",
+        "dev:start": "nodemon ./dist/shared/infra/http/server.ts",
+        "watch-node": "nodemon ./dist/shared/infra/http/server.ts",
+        "dev:server": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules ./src/shared/infra/http/server.ts",
+        "typeormPROD": "NODE_ENV=production ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+        "typeormDEV": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
     },
     "dependencies": {
         "@types/bcrypt": "^3.0.0",

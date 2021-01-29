@@ -8,3 +8,4 @@ exports.default = {
         pass: 'a73c37e0957ecb',
     },
 };
+//# sourceMappingURL=mail.js.map
