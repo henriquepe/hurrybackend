@@ -6,6 +6,16 @@ import crypto from 'crypto';
 import multerS3 from 'multer-s3';
 import AWS from 'aws-sdk';
 
+process.env.NODE_ENV = 'development';
+
+let bucket = '';
+
+if (process.env.NODE_ENV === 'development') {
+    bucket = process.env.BUCKET_DEVELOPMENT as string;
+} else {
+    bucket = process.env.BUCKET_PRODUCTION as string;
+}
+
 const storageTypes = {
     local: multer.diskStorage({
         destination: (request, file, callback) => {
@@ -29,7 +39,7 @@ const storageTypes = {
 
     s3: multerS3({
         s3: new AWS.S3(),
-        bucket: 'hurrybucket',
+        bucket,
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: (request, file, callback) => {
