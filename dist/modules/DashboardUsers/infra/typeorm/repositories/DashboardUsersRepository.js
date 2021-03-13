@@ -11,15 +11,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const typedi_1 = require("typedi");
-const EventType_entity_1 = __importDefault(require("../entities/EventType.entity"));
-let EventTypesRepository = 
+const DashboardUser_entity_1 = __importDefault(require("../entities/DashboardUser.entity"));
+let DashboardUserRepository = 
 // eslint-disable-next-line prettier/prettier
-class EventTypesRepository extends typeorm_1.Repository {
+class DashboardUserRepository extends typeorm_1.Repository {
 };
-EventTypesRepository = __decorate([
+DashboardUserRepository = __decorate([
     typedi_1.Service(),
-    typeorm_1.EntityRepository(EventType_entity_1.default)
+    typeorm_1.EntityRepository(DashboardUser_entity_1.default)
     // eslint-disable-next-line prettier/prettier
-], EventTypesRepository);
-exports.default = EventTypesRepository;
-//# sourceMappingURL=EventTypesRepository.js.map
+], DashboardUserRepository);
+exports.default = DashboardUserRepository;
+//# sourceMappingURL=DashboardUsersRepository.js.map

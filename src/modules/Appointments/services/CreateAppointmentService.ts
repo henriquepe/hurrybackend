@@ -5,6 +5,14 @@ import { Connection } from 'typeorm';
 import Appointment from '@modules/Appointments/infra/typeorm/entities/Appointment.entity';
 import AppointmentsRepository from '@modules/Appointments/infra/typeorm/repositories/AppointmentsRepository';
 
+interface ArtistPropos {
+    name: string;
+    start: string;
+    spotifyLink: string;
+    photoLink: string;
+}
+
+
 interface Request {
     name: string;
     provider_id: string;
@@ -16,7 +24,7 @@ interface Request {
     state: string;
     city: string;
     street: string;
-    artists_ids: string[];
+    artists: ArtistPropos[];
 }
 
 @Service()
@@ -40,7 +48,7 @@ export default class CreateAppointmentService {
         state,
         city,
         street,
-        artists_ids,
+        artists,
     }: Request): Promise<Appointment> {
         if (
             name === '' ||
@@ -76,7 +84,7 @@ export default class CreateAppointmentService {
             state: stateToLowerCase,
             city: cityToLowerCase,
             street: streetToLowerCase,
-            artists_ids,
+            artists,
         });
 
         await this.appointmentsRepository.save(appointment);

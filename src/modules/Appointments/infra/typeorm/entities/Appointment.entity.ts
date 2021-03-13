@@ -13,6 +13,13 @@ import EventType from '@modules/EventsType/infra/typeorm/entities/EventType.enti
 import MusicStyle from '@modules/MusicsStyle/infra/typeorm/entities/MusicStyle.entity';
 import Post from '@modules/Posts/infra/typeorm/entities/Post.entity';
 
+interface ArtistPropos {
+    name: string;
+    start: string;
+    spotifyLink: string;
+    photoLink: string;
+}
+
 @Entity('appointments')
 class Appointment {
     @PrimaryGeneratedColumn('uuid')
@@ -28,8 +35,8 @@ class Appointment {
     @JoinColumn({ name: 'provider_id' })
     provider: string;
 
-    @Column('varchar')
-    artists_ids: string[];
+    @Column('text')
+    artists: ArtistPropos[];
 
     @Column('varchar')
     musicstyle_id: string;

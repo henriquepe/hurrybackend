@@ -10,7 +10,7 @@ interface Request {
     email: string;
     password: string;
     avatar_url?: string;
-    sex: 'male' | 'female';
+    sex: 'masculino' | 'feminino';
 }
 
 @Service()
@@ -36,7 +36,7 @@ export default class CreateDashboardUserService {
         if (
             (typeOfUserToLowerCase !== 'fornecedor' &&
                 typeOfUserToLowerCase !== 'administrador') ||
-            (sex !== 'female' && sex !== 'male')
+            (sex !== 'feminino' && sex !== 'masculino')
         ) {
             throw new Error(
                 'Not suficient (or incorrect) information to create an account, please fill all require information',

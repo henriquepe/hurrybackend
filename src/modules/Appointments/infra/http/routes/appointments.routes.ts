@@ -23,7 +23,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
             state,
             city,
             street,
-            artists_ids,
+            artists,
         } = request.body;
 
         const createAppointmentService = new CreateAppointmentService(
@@ -41,7 +41,7 @@ appointmentsRouter.post('/', ensureAuthenticated, async (request, response) => {
             state,
             city,
             street,
-            artists_ids,
+            artists,
         });
 
         return response.status(200).json(appointment);

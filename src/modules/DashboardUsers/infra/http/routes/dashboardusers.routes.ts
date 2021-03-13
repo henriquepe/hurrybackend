@@ -1,4 +1,5 @@
 import CreateDashboardUserService from '@modules/DashboardUsers/services/CreateDashboardUserService';
+import ListDashboardUsersService from '@modules/DashboardUsers/services/ListDashboardUsersService';
 import connection from '@shared/infra/typeorm';
 import { Router } from 'express';
 
@@ -22,6 +23,20 @@ dashboardUsersRouter.post('/', async (request, response) => {
         });
 
         return response.status(200).json(dashboardUser);
+    } catch (err) {
+        return response.status(401).json({ error: err.message });
+    }
+});
+
+dashboardUsersRouter.get('/', async (request, response) => {
+    try {
+        const listDashboardUsersService = new ListDashboardUsersService(
+            await connection,
+        );
+
+        const dashboardUsers = await listDashboardUsersService.execute();
+
+        return response.status(200).json(dashboardUsers);
     } catch (err) {
         return response.status(401).json({ error: err.message });
     }

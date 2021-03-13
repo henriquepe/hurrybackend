@@ -13,11 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
-const EventType_entity_1 = __importDefault(require("@modules/EventsType/infra/typeorm/entites/EventType.entity"));
+const User_entity_1 = __importDefault(require("@modules/Users/infra/typeorm/entities/User.entity"));
+const EventType_entity_1 = __importDefault(require("@modules/EventsType/infra/typeorm/entities/EventType.entity"));
 const MusicStyle_entity_1 = __importDefault(require("@modules/MusicsStyle/infra/typeorm/entities/MusicStyle.entity"));
 const Post_entity_1 = __importDefault(require("@modules/Posts/infra/typeorm/entities/Post.entity"));
-const User_entity_1 = __importDefault(require("@modules/Users/infra/typeorm/entities/User.entity"));
 let Appointment = class Appointment {
+    constructor() {
+        this.artists_ids = [];
+    }
 };
 __decorate([
     typeorm_1.PrimaryGeneratedColumn('uuid'),
@@ -37,7 +40,7 @@ __decorate([
     __metadata("design:type", String)
 ], Appointment.prototype, "provider", void 0);
 __decorate([
-    typeorm_1.Column('varchar'),
+    typeorm_1.Column('varchar[]'),
     __metadata("design:type", Array)
 ], Appointment.prototype, "artists_ids", void 0);
 __decorate([
